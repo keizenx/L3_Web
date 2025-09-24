@@ -913,18 +913,6 @@ namespace IITWebApp.Controllers
                 .ThenBy(s => s.NomService)
                 .ToListAsync();
 
-            // Statistiques
-            ViewBag.TotalServices = services.Count;
-            ViewBag.ServicesActifs = services.Count(s => s.Statut == "actif");
-            ViewBag.TotalSouscriptions = services.Sum(s => s.SouscriptionsActives);
-            ViewBag.RevenusMensuels = services.Sum(s => s.RevenusMensuels);
-
-            // Statistiques alternatives basées sur la liste finale
-            ViewBag.TotalServicesAlt = serviceList.Count;
-            ViewBag.ServicesActifsAlt = serviceList.Count(s => s.Statut == "actif");
-            ViewBag.TotalSouscriptionsAlt = services.Sum(s => s.SouscriptionsActives);
-            ViewBag.RevenusMensuelsAlt = services.Sum(s => s.RevenusMensuels);
-
             // Convertir en liste de services pour la vue
             var serviceList = services.Select(s => new Service {
                 IdService = s.IdService,
@@ -935,6 +923,18 @@ namespace IITWebApp.Controllers
                 Statut = s.Statut,
                 DateCreation = DateTime.Now // Date par défaut car non récupérée
             }).ToList();
+
+            // Statistiques basées sur la liste finale
+            ViewBag.TotalServices = serviceList.Count;
+            ViewBag.ServicesActifs = serviceList.Count(s => s.Statut == "actif");
+            ViewBag.TotalSouscriptions = services.Sum(s => s.SouscriptionsActives);
+            ViewBag.RevenusMensuels = services.Sum(s => s.RevenusMensuels);
+
+            // Statistiques alternatives basées sur la liste finale
+            ViewBag.TotalServicesAlt = serviceList.Count;
+            ViewBag.ServicesActifsAlt = serviceList.Count(s => s.Statut == "actif");
+            ViewBag.TotalSouscriptionsAlt = services.Sum(s => s.SouscriptionsActives);
+            ViewBag.RevenusMensuelsAlt = services.Sum(s => s.RevenusMensuels);
 
             return View("~/Views/Services/Index.cshtml", serviceList);
         }
