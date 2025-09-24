@@ -1,0 +1,53 @@
+# Fichiers générés par Visual Studio et .NET
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+*.temp
+
+# Fichiers de base de données locale
+*.db
+*.sqlite
+*.sqlite3
+
+# Fichiers de configuration utilisateur
+appsettings.Development.json
+appsettings.local.json
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
+*.old
+
+# Fichiers système
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Fichiers de package NuGet
+packages/
+*.nupkg
+
+# Fichiers de test
+*_test.cs
+TestResults/
+
+# Fichiers temporaires d'édition
+*.swp
+*.swo
+*~
+
+# Fichiers de débogage
+*.pdb
+
+# Dossiers de publication
+publish/
+wwwroot/lib/
+
+# Secrets et clés
+secrets.json
+appsettings.*.json
