@@ -178,7 +178,7 @@
 
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-number">@ViewBag.RevenusMensuels.ToString("C")</div>
+                    <div class="stats-number">@ViewBag.RevenusMensuels.ToString("C0")</div>
                     <div class="stats-label">Revenus Mensuels</div>
                     <p class="small text-muted mt-2">Revenus générés par les services</p>
                 </div>
@@ -331,7 +331,7 @@
                                                 <td>
                                                     <span class="badge bg-secondary">@service.TypeService</span>
                                                 </td>
-                                                <td>@service.Prix.ToString("C")</td>
+                                                <td>@service.Prix.ToString("C0")</td>
                                                 <td>
                                                     @if (service.Statut == "actif")
                                                     {

@@ -656,15 +656,16 @@ namespace IITWebApp.Controllers
         public async Task<IActionResult> Promotion()
         {
             // Récupérer les statistiques de promotion (en utilisant les classes existantes)
-            var statsPromotion = await _context.Inscriptions
+            var statsPromotion = _context.Inscriptions
                 .Include(i => i.Classe)
                 .Where(i => i.AnneeAcademique == "2024-2025")
-                .GroupBy(i => i.Classe.NomClasse)
+                .AsEnumerable()
+                .GroupBy(i => i.Classe != null ? i.Classe.NomClasse : "Non assignée")
                 .Select(g => new {
-                    Classe = g.Key ?? "Non assignée",
+                    Classe = g.Key,
                     Nombre = g.Count()
                 })
-                .ToListAsync();
+                .ToList();
 
             ViewBag.StatsPromotion = statsPromotion;
 
@@ -913,7 +914,7 @@ namespace IITWebApp.Controllers
                         .Count(),
                     RevenusMensuels = _context.SouscriptionServices
                         .Where(ss => ss.IdService == s.IdService && ss.Statut == "actif")
-                        .Sum(ss => (decimal?)ss.Prix) ?? 0
+                        .Sum(ss => (decimal?)s.Prix) ?? 0
                 })
                 .OrderBy(s => s.TypeService)
                 .ThenBy(s => s.NomService)

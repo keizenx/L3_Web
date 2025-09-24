@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IITWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f510650aed4611b51c74a08ac45fc2c5af81206")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f39751e8b9cf88c709969f2989e29d4f1fb2f48d")]
 [assembly: System.Reflection.AssemblyProductAttribute("IITWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IITWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
