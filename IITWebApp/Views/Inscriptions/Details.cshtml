@@ -1,0 +1,57 @@
+@model IITWebApp.Models.Inscription
+
+@{
+    ViewData["Title"] = "Détails de l'inscription";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            <i class="fas fa-clipboard-list me-2"></i>
+            Détails de l'inscription
+        </h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Étudiant :</dt>
+            <dd class="col-sm-9">@Model.Etudiant?.Nom @Model.Etudiant?.Prenom</dd>
+
+            <dt class="col-sm-3">Classe :</dt>
+            <dd class="col-sm-9">@Model.Classe?.NomClasse</dd>
+
+            <dt class="col-sm-3">Filière :</dt>
+            <dd class="col-sm-9">@Model.Filiere?.NomFiliere</dd>
+
+            <dt class="col-sm-3">Année académique :</dt>
+            <dd class="col-sm-9">@Model.AnneeAcademique</dd>
+
+            <dt class="col-sm-3">Type d'inscription :</dt>
+            <dd class="col-sm-9">@Model.TypeInscription</dd>
+
+            <dt class="col-sm-3">Montant d'inscription :</dt>
+            <dd class="col-sm-9">@Model.MontantInscription.ToString("N0") FCFA</dd>
+
+            <dt class="col-sm-3">Statut :</dt>
+            <dd class="col-sm-9">
+                <span class="badge bg-@(Model.Statut == "validée" ? "success" : Model.Statut == "en attente" ? "warning" : "secondary")">
+                    @Model.Statut
+                </span>
+            </dd>
+
+            <dt class="col-sm-3">Date d'inscription :</dt>
+            <dd class="col-sm-9">@Model.DateInscription.ToString("dd/MM/yyyy")</dd>
+        </dl>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+            </a>
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.IdInscription" class="btn btn-primary">
+                    <i class="fas fa-edit me-1"></i> Modifier
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

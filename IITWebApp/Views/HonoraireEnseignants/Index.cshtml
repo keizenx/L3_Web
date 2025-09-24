@@ -1,0 +1,101 @@
+@model IEnumerable<IITWebApp.Models.HonoraireEnseignant>
+
+@{
+    ViewData["Title"] = "Gestion des Honoraires";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-gradient">
+                <i class="fas fa-money-bill-wave me-3"></i>
+                Gestion des Honoraires d'Enseignants
+            </h2>
+            <a href="/HonoraireEnseignants/Create" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>
+                Nouveau Honoraire
+            </a>
+        </div>
+
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    Liste des Honoraires
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="fas fa-user-tie me-1"></i> Enseignant</th>
+                                <th><i class="fas fa-book me-1"></i> Cours</th>
+                                <th><i class="fas fa-calendar me-1"></i> Période</th>
+                                <th><i class="fas fa-euro-sign me-1"></i> Montant Total</th>
+                                <th><i class="fas fa-clock me-1"></i> Heures</th>
+                                <th><i class="fas fa-check-circle me-1"></i> Statut</th>
+                                <th><i class="fas fa-cog me-1"></i> Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any())
+                            {
+                                @foreach (var honoraire in Model)
+                                {
+                                    <tr>
+                                        <td>@honoraire.Enseignant?.Nom @honoraire.Enseignant?.Prenom</td>
+                                        <td>@honoraire.Cours?.NomCours</td>
+                                        <td>@honoraire.Mois/@honoraire.Annee</td>
+                                        <td class="fw-bold">@(honoraire.MontantTotal?.ToString("N0") ?? "0") FCFA</td>
+                                        <td>@honoraire.NombreHeures</td>
+                                        <td>
+                                            @if (honoraire.StatutPaiement == "paye")
+                                            {
+                                                <span class="badge bg-success">Payé</span>
+                                            }
+                                            else if (honoraire.StatutPaiement == "en_cours")
+                                            {
+                                                <span class="badge bg-warning">En cours</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Non payé</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="/HonoraireEnseignants/Details/@honoraire.IdHonoraire" class="btn btn-sm btn-info">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="/HonoraireEnseignants/Edit/@honoraire.IdHonoraire" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="/HonoraireEnseignants/Delete/@honoraire.IdHonoraire" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">
+                                        <i class="fas fa-money-bill-wave fa-2x text-muted mb-3"></i>
+                                        <p class="text-muted">Aucun honoraire trouvé</p>
+                                        <a href="/HonoraireEnseignants/Create" class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i>
+                                            Ajouter un honoraire
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

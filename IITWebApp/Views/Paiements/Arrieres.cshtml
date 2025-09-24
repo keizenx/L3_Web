@@ -1,0 +1,481 @@
+@{
+    ViewData["Title"] = "Gestion des Arriérés";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+            Gestion des Arriérés de Paiement
+        </h1>
+        <a href="/Home/Phase1Dashboard" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left fa-sm"></i> Retour au tableau de bord
+        </a>
+    </div>
+
+    <!-- Statistiques des arriérés -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Total Arriérés
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">16</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Montant Total Dû
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">19.2M FCFA</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Arriérés > 3 mois
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Récupérés ce mois
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtres et actions -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-filter me-2"></i>Filtres et Actions
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="filtreClasse" class="form-label">Classe</label>
+                        <select id="filtreClasse" class="form-select">
+                            <option value="">Toutes les classes</option>
+                            <option value="L1GL">L1GL</option>
+                            <option value="L2GL">L2GL</option>
+                            <option value="L3GL">L3GL</option>
+                            <option value="L1RT">L1RT</option>
+                            <option value="L2RT">L2RT</option>
+                            <option value="L3RT">L3RT</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="filtreDuree" class="form-label">Durée d'arriéré</label>
+                        <select id="filtreDuree" class="form-select">
+                            <option value="">Toutes les durées</option>
+                            <option value="1">1-2 mois</option>
+                            <option value="3">3-6 mois</option>
+                            <option value="6">Plus de 6 mois</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="filtreMontant" class="form-label">Montant dû</label>
+                        <select id="filtreMontant" class="form-select">
+                            <option value="">Tous les montants</option>
+                            <option value="500000">Moins de 500.000 FCFA</option>
+                            <option value="1000000">500.000 - 1.000.000 FCFA</option>
+                            <option value="2000000">Plus de 1.000.000 FCFA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label class="form-label">&nbsp;</label>
+                        <div>
+                            <button type="button" class="btn btn-primary" onclick="appliquerFiltres()">
+                                <i class="fas fa-search me-2"></i>Filtrer
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="reinitialiserFiltres()">
+                                <i class="fas fa-undo me-2"></i>Réinitialiser
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liste des arriérés -->
+    <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-list me-2"></i>Liste des Arriérés
+            </h6>
+            <div>
+                <button type="button" class="btn btn-success btn-sm" onclick="envoyerRappels()">
+                    <i class="fas fa-envelope me-2"></i>Envoyer Rappels
+                </button>
+                <button type="button" class="btn btn-info btn-sm" onclick="exporterArrieres()">
+                    <i class="fas fa-download me-2"></i>Exporter
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tableArrieres">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                            </th>
+                            <th>Matricule</th>
+                            <th>Nom & Prénom</th>
+                            <th>Classe</th>
+                            <th>Année Académique</th>
+                            <th>Montant Dû</th>
+                            <th>Durée Arriéré</th>
+                            <th>Dernier Paiement</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" class="select-row" value="IIT-0325"></td>
+                            <td>IIT-0325</td>
+                            <td>ADOM ANGE-EMMANUEL</td>
+                            <td>L1GL</td>
+                            <td>2024-2025</td>
+                            <td class="text-danger"><strong>1.200.000 FCFA</strong></td>
+                            <td><span class="badge bg-danger">4 mois</span></td>
+                            <td>2025-05-15</td>
+                            <td><span class="badge bg-danger">Critique</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails('IIT-0325')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success" onclick="enregistrerPaiement('IIT-0325')">
+                                    <i class="fas fa-credit-card"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="envoyerRappel('IIT-0325')">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="select-row" value="IIT-0316"></td>
+                            <td>IIT-0316</td>
+                            <td>BADOU KOFFI ANGE URIE</td>
+                            <td>L1GL</td>
+                            <td>2024-2025</td>
+                            <td class="text-warning"><strong>600.000 FCFA</strong></td>
+                            <td><span class="badge bg-warning">2 mois</span></td>
+                            <td>2025-07-10</td>
+                            <td><span class="badge bg-warning">Modéré</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails('IIT-0316')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success" onclick="enregistrerPaiement('IIT-0316')">
+                                    <i class="fas fa-credit-card"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="envoyerRappel('IIT-0316')">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="select-row" value="IIT-0279"></td>
+                            <td>IIT-0279</td>
+                            <td>MANLAN AMAH ROSE EMMANUELLE</td>
+                            <td>L1GL</td>
+                            <td>2024-2025</td>
+                            <td class="text-danger"><strong>1.800.000 FCFA</strong></td>
+                            <td><span class="badge bg-danger">6 mois</span></td>
+                            <td>2025-03-20</td>
+                            <td><span class="badge bg-danger">Critique</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails('IIT-0279')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success" onclick="enregistrerPaiement('IIT-0279')">
+                                    <i class="fas fa-credit-card"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="envoyerRappel('IIT-0279')">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="select-row" value="IIT-0304"></td>
+                            <td>IIT-0304</td>
+                            <td>OUATTARA ADAMA</td>
+                            <td>L1GL</td>
+                            <td>2024-2025</td>
+                            <td class="text-warning"><strong>900.000 FCFA</strong></td>
+                            <td><span class="badge bg-warning">3 mois</span></td>
+                            <td>2025-06-15</td>
+                            <td><span class="badge bg-warning">Modéré</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails('IIT-0304')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success" onclick="enregistrerPaiement('IIT-0304')">
+                                    <i class="fas fa-credit-card"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="envoyerRappel('IIT-0304')">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour enregistrer un paiement -->
+<div class="modal fade" id="modalPaiement" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-credit-card me-2"></i>Enregistrer un Paiement
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formPaiement">
+                    <div class="mb-3">
+                        <label for="modalMatricule" class="form-label">Matricule</label>
+                        <input type="text" id="modalMatricule" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalMontant" class="form-label">Montant du Paiement *</label>
+                        <input type="number" id="modalMontant" class="form-control" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalMode" class="form-label">Mode de Paiement *</label>
+                        <select id="modalMode" class="form-select" required>
+                            <option value="">Sélectionner...</option>
+                            <option value="Espèces">Espèces</option>
+                            <option value="Virement">Virement bancaire</option>
+                            <option value="Chèque">Chèque</option>
+                            <option value="Mobile Money">Mobile Money</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalDate" class="form-label">Date du Paiement *</label>
+                        <input type="date" id="modalDate" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalObservation" class="form-label">Observation</label>
+                        <textarea id="modalObservation" class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-success" onclick="confirmerPaiement()">
+                    <i class="fas fa-check me-2"></i>Confirmer le Paiement
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Données des arriérés (en réalité, ceci viendrait de la base de données)
+        const arrieresData = [
+            {
+                matricule: 'IIT-0325',
+                nom: 'ADOM ANGE-EMMANUEL',
+                classe: 'L1GL',
+                annee: '2024-2025',
+                montantDu: 1200000,
+                dureeArriere: 4,
+                dernierPaiement: '2025-05-15',
+                statut: 'critique'
+            },
+            {
+                matricule: 'IIT-0316',
+                nom: 'BADOU KOFFI ANGE URIE',
+                classe: 'L1GL',
+                annee: '2024-2025',
+                montantDu: 600000,
+                dureeArriere: 2,
+                dernierPaiement: '2025-07-10',
+                statut: 'modere'
+            }
+        ];
+
+        function appliquerFiltres() {
+            const classe = document.getElementById('filtreClasse').value;
+            const duree = document.getElementById('filtreDuree').value;
+            const montant = document.getElementById('filtreMontant').value;
+            
+            // Logique de filtrage (simulation)
+            console.log('Filtres appliqués:', { classe, duree, montant });
+            alert('Filtres appliqués avec succès !');
+        }
+
+        function reinitialiserFiltres() {
+            document.getElementById('filtreClasse').value = '';
+            document.getElementById('filtreDuree').value = '';
+            document.getElementById('filtreMontant').value = '';
+            alert('Filtres réinitialisés !');
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.select-row');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+        }
+
+        function voirDetails(matricule) {
+            alert(`Voir les détails de l'étudiant ${matricule}`);
+            // Rediriger vers la page de détails
+            // window.location.href = `/Etudiants/Details/${matricule}`;
+        }
+
+        function enregistrerPaiement(matricule) {
+            document.getElementById('modalMatricule').value = matricule;
+            document.getElementById('modalDate').value = new Date().toISOString().split('T')[0];
+            
+            const modal = new bootstrap.Modal(document.getElementById('modalPaiement'));
+            modal.show();
+        }
+
+        function confirmerPaiement() {
+            const matricule = document.getElementById('modalMatricule').value;
+            const montant = document.getElementById('modalMontant').value;
+            const mode = document.getElementById('modalMode').value;
+            const date = document.getElementById('modalDate').value;
+            const observation = document.getElementById('modalObservation').value;
+
+            if (!montant || !mode || !date) {
+                alert('Veuillez remplir tous les champs obligatoires.');
+                return;
+            }
+
+            if (confirm(`Confirmer le paiement de ${montant} FCFA pour l'étudiant ${matricule} ?`)) {
+                // Simulation de l'enregistrement du paiement
+                alert('Paiement enregistré avec succès !');
+                
+                // Fermer le modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalPaiement'));
+                modal.hide();
+                
+                // Recharger la page ou mettre à jour le tableau
+                location.reload();
+            }
+        }
+
+        function envoyerRappel(matricule) {
+            if (confirm(`Envoyer un rappel de paiement à l'étudiant ${matricule} ?`)) {
+                alert(`Rappel envoyé à l'étudiant ${matricule} !`);
+            }
+        }
+
+        function envoyerRappels() {
+            const selectedRows = document.querySelectorAll('.select-row:checked');
+            
+            if (selectedRows.length === 0) {
+                alert('Veuillez sélectionner au moins un étudiant.');
+                return;
+            }
+
+            if (confirm(`Envoyer des rappels à ${selectedRows.length} étudiants ?`)) {
+                alert(`${selectedRows.length} rappels envoyés avec succès !`);
+            }
+        }
+
+        function exporterArrieres() {
+            alert('Export des arriérés en cours...');
+            // Logique d'export (Excel, PDF, etc.)
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser la date du jour dans le modal
+            document.getElementById('modalDate').value = new Date().toISOString().split('T')[0];
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        .border-left-danger {
+            border-left: 0.25rem solid #e74a3b !important;
+        }
+        .border-left-warning {
+            border-left: 0.25rem solid #f6c23e !important;
+        }
+        .border-left-info {
+            border-left: 0.25rem solid #36b9cc !important;
+        }
+        .border-left-success {
+            border-left: 0.25rem solid #1cc88a !important;
+        }
+        .table th {
+            background-color: #f8f9fc;
+            font-weight: 600;
+        }
+        .select-row {
+            cursor: pointer;
+        }
+        .btn-sm {
+            margin: 1px;
+        }
+    </style>
+}

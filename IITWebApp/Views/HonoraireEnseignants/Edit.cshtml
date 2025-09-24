@@ -1,0 +1,130 @@
+@model IITWebApp.Models.HonoraireEnseignant
+
+@{
+    ViewData["Title"] = "Modifier l'honoraire";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            <i class="fas fa-edit me-2"></i>
+            Modifier l'honoraire enseignant
+        </h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <input type="hidden" asp-for="IdHonoraire" />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="IdEnseignant" class="form-label">Enseignant</label>
+                        <select asp-for="IdEnseignant" class="form-control" asp-items="ViewBag.IdEnseignant">
+                            <option value="">Sélectionner un enseignant...</option>
+                        </select>
+                        <span asp-validation-for="IdEnseignant" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="IdCours" class="form-label">Cours</label>
+                        <select asp-for="IdCours" class="form-control" asp-items="ViewBag.IdCours">
+                            <option value="">Sélectionner un cours...</option>
+                        </select>
+                        <span asp-validation-for="IdCours" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Mois" class="form-label">Mois</label>
+                        <select asp-for="Mois" class="form-control">
+                            <option value="">Sélectionner...</option>
+                            <option value="01" selected="@(Model.Mois == "01")">Janvier</option>
+                            <option value="02" selected="@(Model.Mois == "02")">Février</option>
+                            <option value="03" selected="@(Model.Mois == "03")">Mars</option>
+                            <option value="04" selected="@(Model.Mois == "04")">Avril</option>
+                            <option value="05" selected="@(Model.Mois == "05")">Mai</option>
+                            <option value="06" selected="@(Model.Mois == "06")">Juin</option>
+                            <option value="07" selected="@(Model.Mois == "07")">Juillet</option>
+                            <option value="08" selected="@(Model.Mois == "08")">Août</option>
+                            <option value="09" selected="@(Model.Mois == "09")">Septembre</option>
+                            <option value="10" selected="@(Model.Mois == "10")">Octobre</option>
+                            <option value="11" selected="@(Model.Mois == "11")">Novembre</option>
+                            <option value="12" selected="@(Model.Mois == "12")">Décembre</option>
+                        </select>
+                        <span asp-validation-for="Mois" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Annee" class="form-label">Année</label>
+                        <input asp-for="Annee" class="form-control" type="number" />
+                        <span asp-validation-for="Annee" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="NombreHeures" class="form-label">Nombre d'heures</label>
+                        <input asp-for="NombreHeures" class="form-control" type="number" step="0.5" />
+                        <span asp-validation-for="NombreHeures" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="TauxHoraire" class="form-label">Taux horaire</label>
+                        <input asp-for="TauxHoraire" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="TauxHoraire" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="MontantTotal" class="form-label">Montant total</label>
+                        <input asp-for="MontantTotal" class="form-control" type="number" step="0.01" readonly />
+                        <span asp-validation-for="MontantTotal" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="StatutPaiement" class="form-label">Statut de paiement</label>
+                        <select asp-for="StatutPaiement" class="form-control">
+                            <option value="En attente" selected="@(Model.StatutPaiement == "En attente")">En attente</option>
+                            <option value="Payé" selected="@(Model.StatutPaiement == "Payé")">Payé</option>
+                            <option value="Annulé" selected="@(Model.StatutPaiement == "Annulé")">Annulé</option>
+                        </select>
+                        <span asp-validation-for="StatutPaiement" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Commentaire" class="form-label">Commentaire</label>
+                <textarea asp-for="Commentaire" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Commentaire" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,104 @@
+@model IITWebApp.Models.HonoraireEnseignant
+
+@{
+    ViewData["Title"] = "Détails Honoraire";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-12">
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-primary text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-eye me-2"></i>
+                    Détails de l'Honoraire
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Enseignant:</strong>
+                        <p class="text-muted">@Model.Enseignant?.Nom @Model.Enseignant?.Prenom</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Cours:</strong>
+                        <p class="text-muted">@Model.Cours?.NomCours</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Période:</strong>
+                        <p class="text-muted">@Model.Mois @Model.Annee</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Statut de Paiement:</strong>
+                        <span class="badge bg-@(Model.StatutPaiement == "paye" ? "success" : Model.StatutPaiement == "en_cours" ? "warning" : "secondary")">
+                            @(Model.StatutPaiement == "paye" ? "Payé" : Model.StatutPaiement == "en_cours" ? "En cours" : "Non payé")
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Montant de Base:</strong>
+                        <p class="text-muted">@Model.MontantBase?.ToString("N0") FCFA</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Taux Horaire:</strong>
+                        <p class="text-muted">@Model.TauxHoraire.ToString("N0") FCFA</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Nombre d'Heures:</strong>
+                        <p class="text-muted">@Model.NombreHeures</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Primes:</strong>
+                        <p class="text-muted">@Model.Primes?.ToString("N0") FCFA</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Retenues:</strong>
+                        <p class="text-muted">@Model.Retenues?.ToString("N0") FCFA</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Montant Total:</strong>
+                        <p class="text-success fw-bold">@(Model.MontantTotal?.ToString("N0") ?? "0") FCFA</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Date de Création:</strong>
+                        <p class="text-muted">@Model.DateCreation?.ToString("dd/MM/yyyy HH:mm")</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>ID Honoraire:</strong>
+                        <p class="text-muted">@Model.IdHonoraire</p>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="/HonoraireEnseignants" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Retour à la liste
+                    </a>
+                    <div>
+                        <a href="/HonoraireEnseignants/Edit/@Model.IdHonoraire" class="btn btn-warning me-2">
+                            <i class="fas fa-edit me-1"></i>
+                            Modifier
+                        </a>
+                        <a href="/HonoraireEnseignants/Delete/@Model.IdHonoraire" class="btn btn-danger">
+                            <i class="fas fa-trash me-1"></i>
+                            Supprimer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

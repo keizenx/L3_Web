@@ -1,0 +1,427 @@
+@model IITWebApp.Models.ReinscriptionViewModel
+
+@{
+    ViewData["Title"] = "Réinscription des Étudiants";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-redo text-primary me-2"></i>
+            Réinscription des Étudiants
+        </h1>
+        <a href="/Home/Phase1Dashboard" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left fa-sm"></i> Retour au tableau de bord
+        </a>
+    </div>
+
+    <!-- Informations sur la réinscription -->
+    <div class="alert alert-info mb-4">
+        <h5><i class="fas fa-info-circle me-2"></i>Processus de Réinscription</h5>
+        <p class="mb-2">La réinscription permet aux étudiants de s'inscrire pour l'année académique suivante :</p>
+        <ul class="mb-0">
+            <li><strong>Étudiants L1GL</strong> → Réinscription en L2GL (si moyenne ≥ 10)</li>
+            <li><strong>Étudiants L2GL</strong> → Réinscription en L3GL (si moyenne ≥ 10)</li>
+            <li><strong>Étudiants L3GL</strong> → Fin de cycle (Diplôme)</li>
+            <li><strong>Scolarité</strong> : 1.200.000 FCFA par année</li>
+        </ul>
+    </div>
+
+    <!-- Formulaire de réinscription -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-clipboard-list me-2"></i>Formulaire de Réinscription
+            </h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Reinscription" method="post" id="reinscriptionForm">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                
+                <!-- Sélection de l'étudiant -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="etuMatricule" class="form-label">Matricule de l'Étudiant *</label>
+                            <input type="text" id="etuMatricule" name="etuMatricule" class="form-control" 
+                                   placeholder="Ex: IIT-0244" required />
+                            <small class="form-text text-muted">Saisissez le matricule pour charger les informations</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-info mt-4" onclick="chargerEtudiant()">
+                                <i class="fas fa-search me-2"></i>Charger les Informations
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informations de l'étudiant (chargées dynamiquement) -->
+                <div id="infosEtudiant" class="card bg-light mb-4" style="display: none;">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="fas fa-user me-2"></i>Informations de l'Étudiant
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Matricule:</strong><br>
+                                <span id="infoMatricule">-</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Nom & Prénom:</strong><br>
+                                <span id="infoNomPrenom">-</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Classe Actuelle:</strong><br>
+                                <span id="infoClasseActuelle">-</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Moyenne:</strong><br>
+                                <span id="infoMoyenne">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Détails de la réinscription -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="anAcadem" class="form-label">Année Académique *</label>
+                            <select id="anAcadem" name="anAcadem" class="form-select" required>
+                                <option value="">Sélectionner l'année...</option>
+                                <option value="2024-2025">2024-2025</option>
+                                <option value="2025-2026">2025-2026</option>
+                                <option value="2026-2027">2026-2027</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Nouvelle Classe</label>
+                            <input type="text" class="form-control bg-light" value="Déterminée automatiquement" readonly />
+                            <small class="form-text text-muted">
+                                La classe sera déterminée selon le niveau actuel et l'éligibilité
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="datelnscrip" class="form-label">Date de Réinscription *</label>
+                            <input type="date" id="datelnscrip" name="datelnscrip" class="form-control" 
+                                   value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="TotalScolarite" class="form-label">Montant de Scolarité *</label>
+                            <input type="number" id="TotalScolarite" name="TotalScolarite" class="form-control" 
+                                   value="1200000" step="0.01" required />
+                            <small class="form-text text-muted">Montant standard: 1.200.000 FCFA</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services additionnels -->
+                <div class="card bg-light mb-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="fas fa-plus-circle me-2"></i>Services Additionnels (Optionnels)
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="serviceCantine" name="services" value="cantine">
+                                    <label class="form-check-label" for="serviceCantine">
+                                        <strong>Cantine</strong><br>
+                                        <small class="text-muted">50.000 FCFA/mois</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="serviceTransport" name="services" value="transport">
+                                    <label class="form-check-label" for="serviceTransport">
+                                        <strong>Transport</strong><br>
+                                        <small class="text-muted">30.000 FCFA/mois</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="serviceBibliotheque" name="services" value="bibliotheque">
+                                    <label class="form-check-label" for="serviceBibliotheque">
+                                        <strong>Bibliothèque</strong><br>
+                                        <small class="text-muted">20.000 FCFA/an</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Résumé des coûts -->
+                <div class="card border-success mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0">
+                            <i class="fas fa-calculator me-2"></i>Résumé des Coûts
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Scolarité:</strong> <span id="montantScolarite">1.200.000</span> FCFA</p>
+                                <p><strong>Services:</strong> <span id="montantServices">0</span> FCFA</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><strong>Total: <span id="montantTotal">1.200.000</span> FCFA</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex justify-content-between">
+                    <a href="/Home/Phase1Dashboard" class="btn btn-secondary">
+                        <i class="fas fa-times me-2"></i>Annuler
+                    </a>
+                    <button type="submit" class="btn btn-success" id="btnReinscrire" disabled>
+                        <i class="fas fa-check-circle me-2"></i>Confirmer la Réinscription
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Liste des réinscriptions récentes -->
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-history me-2"></i>Réinscriptions Récentes
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Nom & Prénom</th>
+                            <th>Année Académique</th>
+                            <th>Classe</th>
+                            <th>Date</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IIT-0244</td>
+                            <td>BELELEY FRANCK</td>
+                            <td>2024-2025</td>
+                            <td>L2GL</td>
+                            <td>2025-09-17</td>
+                            <td>1.200.000 FCFA</td>
+                            <td><span class="badge bg-success">Validé</span></td>
+                        </tr>
+                        <tr>
+                            <td>IIT-0153</td>
+                            <td>KOFFI ORNELLA MARIE</td>
+                            <td>2024-2025</td>
+                            <td>L2GL</td>
+                            <td>2025-09-16</td>
+                            <td>1.200.000 FCFA</td>
+                            <td><span class="badge bg-success">Validé</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Données simulées des étudiants (en réalité, ceci viendrait de la base de données)
+        const etudiantsDB = {
+            'IIT-0244': {
+                nom: 'BELELEY',
+                prenom: 'FRANCK',
+                classeActuelle: 'L1GL',
+                moyenne: 12.50,
+                statut: 'actif'
+            },
+            'IIT-0153': {
+                nom: 'KOFFI',
+                prenom: 'ORNELLA MARIE HELEINE MOYHE',
+                classeActuelle: 'L1GL',
+                moyenne: 16.40,
+                statut: 'actif'
+            },
+            'IIT-0325': {
+                nom: 'ADOM',
+                prenom: 'ANGE-EMMANUEL',
+                classeActuelle: 'L1GL',
+                moyenne: 9.50,
+                statut: 'actif'
+            }
+        };
+
+        function chargerEtudiant() {
+            const matricule = document.getElementById('etuMatricule').value.toUpperCase();
+            
+            if (!matricule) {
+                alert('Veuillez saisir un matricule.');
+                return;
+            }
+
+            const etudiant = etudiantsDB[matricule];
+            
+            if (!etudiant) {
+                alert('Étudiant non trouvé. Vérifiez le matricule.');
+                return;
+            }
+
+            // Afficher les informations de l'étudiant
+            document.getElementById('infoMatricule').textContent = matricule;
+            document.getElementById('infoNomPrenom').textContent = `${etudiant.nom} ${etudiant.prenom}`;
+            document.getElementById('infoClasseActuelle').textContent = etudiant.classeActuelle;
+            document.getElementById('infoMoyenne').textContent = etudiant.moyenne;
+
+            // Déterminer la nouvelle classe
+            let nouvelleClasse = '';
+            if (etudiant.classeActuelle === 'L1GL') {
+                nouvelleClasse = 'L2GL';
+            } else if (etudiant.classeActuelle === 'L2GL') {
+                nouvelleClasse = 'L3GL';
+            } else if (etudiant.classeActuelle === 'L1RT') {
+                nouvelleClasse = 'L2RT';
+            } else if (etudiant.classeActuelle === 'L2RT') {
+                nouvelleClasse = 'L3RT';
+            }
+
+            // Vérifier si l'étudiant peut être promu
+            if (etudiant.moyenne >= 10.00 && nouvelleClasse) {
+                document.getElementById('classeCode').value = nouvelleClasse;
+                document.getElementById('infosEtudiant').style.display = 'block';
+                document.getElementById('btnReinscrire').disabled = false;
+                
+                // Ajouter une classe de succès
+                document.getElementById('infosEtudiant').className = 'card bg-success text-white mb-4';
+                document.getElementById('infosEtudiant').innerHTML = `
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="fas fa-check-circle me-2"></i>Étudiant Éligible à la Promotion
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Matricule:</strong><br>
+                                <span>${matricule}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Nom & Prénom:</strong><br>
+                                <span>${etudiant.nom} ${etudiant.prenom}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Classe Actuelle:</strong><br>
+                                <span>${etudiant.classeActuelle}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Moyenne:</strong><br>
+                                <span>${etudiant.moyenne} ✅</span>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <strong>Nouvelle Classe:</strong> ${nouvelleClasse}
+                        </div>
+                    </div>
+                `;
+            } else {
+                document.getElementById('infosEtudiant').style.display = 'block';
+                document.getElementById('infosEtudiant').className = 'card bg-warning text-dark mb-4';
+                document.getElementById('infosEtudiant').innerHTML = `
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Étudiant Non Éligible à la Promotion
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Matricule:</strong><br>
+                                <span>${matricule}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Nom & Prénom:</strong><br>
+                                <span>${etudiant.nom} ${etudiant.prenom}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Classe Actuelle:</strong><br>
+                                <span>${etudiant.classeActuelle}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Moyenne:</strong><br>
+                                <span>${etudiant.moyenne} ❌</span>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <strong>Raison:</strong> ${etudiant.moyenne < 10 ? 'Moyenne insuffisante (< 10)' : 'Fin de cycle atteinte'}
+                        </div>
+                    </div>
+                `;
+                document.getElementById('btnReinscrire').disabled = true;
+            }
+        }
+
+        // Calculer le total des coûts
+        function calculerTotal() {
+            const scolarite = parseFloat(document.getElementById('TotalScolarite').value) || 0;
+            let services = 0;
+            
+            // Calculer le coût des services
+            if (document.getElementById('serviceCantine').checked) {
+                services += 50000 * 10; // 10 mois
+            }
+            if (document.getElementById('serviceTransport').checked) {
+                services += 30000 * 10; // 10 mois
+            }
+            if (document.getElementById('serviceBibliotheque').checked) {
+                services += 20000; // 1 an
+            }
+            
+            const total = scolarite + services;
+            
+            document.getElementById('montantScolarite').textContent = scolarite.toLocaleString();
+            document.getElementById('montantServices').textContent = services.toLocaleString();
+            document.getElementById('montantTotal').textContent = total.toLocaleString();
+        }
+
+        // Événements
+        document.getElementById('TotalScolarite').addEventListener('input', calculerTotal);
+        document.getElementById('serviceCantine').addEventListener('change', calculerTotal);
+        document.getElementById('serviceTransport').addEventListener('change', calculerTotal);
+        document.getElementById('serviceBibliotheque').addEventListener('change', calculerTotal);
+
+        // Initialiser le calcul
+        calculerTotal();
+    </script>
+}
+
+@section Styles {
+    <style>
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+    </style>
+}

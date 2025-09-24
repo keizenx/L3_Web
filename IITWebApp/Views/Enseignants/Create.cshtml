@@ -1,0 +1,133 @@
+@model IITWebApp.Models.Enseignant
+
+@{
+    ViewData["Title"] = "Créer Enseignant";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-primary text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-plus me-2"></i>
+                    Créer un nouvel Enseignant
+                </h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Nom" class="form-label">
+                                    <i class="fas fa-user me-1"></i> Nom *
+                                </label>
+                                <input asp-for="Nom" class="form-control" />
+                                <span asp-validation-for="Nom" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Prenom" class="form-label">
+                                    <i class="fas fa-user me-1"></i> Prénom *
+                                </label>
+                                <input asp-for="Prenom" class="form-control" />
+                                <span asp-validation-for="Prenom" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">
+                                    <i class="fas fa-envelope me-1"></i> Email
+                                </label>
+                                <input asp-for="Email" class="form-control" type="email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Telephone" class="form-label">
+                                    <i class="fas fa-phone me-1"></i> Téléphone
+                                </label>
+                                <input asp-for="Telephone" class="form-control" />
+                                <span asp-validation-for="Telephone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Specialite" class="form-label">
+                                    <i class="fas fa-graduation-cap me-1"></i> Spécialité
+                                </label>
+                                <input asp-for="Specialite" class="form-control" />
+                                <span asp-validation-for="Specialite" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Grade" class="form-label">
+                                    <i class="fas fa-star me-1"></i> Grade
+                                </label>
+                                <select asp-for="Grade" class="form-control">
+                                    <option value="">Sélectionner un grade</option>
+                                    <option value="Assistant">Assistant</option>
+                                    <option value="Chargé de Cours">Chargé de Cours</option>
+                                    <option value="Maître de Conférences">Maître de Conférences</option>
+                                    <option value="Professeur">Professeur</option>
+                                </select>
+                                <span asp-validation-for="Grade" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="NiveauExperience" class="form-label">
+                                    <i class="fas fa-clock me-1"></i> Niveau d'Expérience (années)
+                                </label>
+                                <input asp-for="NiveauExperience" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="NiveauExperience" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="/Enseignants" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Retour à la liste
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>
+                            Créer l'Enseignant
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Validation côté client
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                if (!this.checkValidity()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                $(this).addClass('was-validated');
+            });
+        });
+    </script>
+}

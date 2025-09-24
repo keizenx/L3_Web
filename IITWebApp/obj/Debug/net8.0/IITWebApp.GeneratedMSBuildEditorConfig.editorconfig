@@ -1,0 +1,217 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = IITWebApp
+build_property.RootNamespace = IITWebApp
+build_property.ProjectDir = C:\Users\Admin\Desktop\Badnson\L3-Web-App\IITWebApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Admin\Desktop\Badnson\L3-Web-App\IITWebApp
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Absences/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJzZW5jZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Absences/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJzZW5jZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Absences/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJzZW5jZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Absences/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJzZW5jZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Absences/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJzZW5jZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Cours/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Cours/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Cours/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Cours/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Cours/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Enseignants/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5zZWlnbmFudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Enseignants/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5zZWlnbmFudHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Enseignants/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5zZWlnbmFudHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Enseignants/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5zZWlnbmFudHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Enseignants/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5zZWlnbmFudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Etudiants/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXR1ZGlhbnRzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Etudiants/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXR1ZGlhbnRzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Etudiants/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXR1ZGlhbnRzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Etudiants/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXR1ZGlhbnRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Etudiants/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXR1ZGlhbnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Home/Phase1Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQaGFzZTFEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/HonoraireEnseignants/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9ub3JhaXJlRW5zZWlnbmFudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/HonoraireEnseignants/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9ub3JhaXJlRW5zZWlnbmFudHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/HonoraireEnseignants/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9ub3JhaXJlRW5zZWlnbmFudHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/HonoraireEnseignants/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9ub3JhaXJlRW5zZWlnbmFudHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/HonoraireEnseignants/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9ub3JhaXJlRW5zZWlnbmFudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Inscriptions/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcHRpb25zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Inscriptions/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcHRpb25zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Inscriptions/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcHRpb25zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Inscriptions/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcHRpb25zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Inscriptions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcHRpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Inscriptions/Promotion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcHRpb25zXFByb21vdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Inscriptions/Reinscription.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcHRpb25zXFJlaW5zY3JpcHRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Migration/TestConnection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlncmF0aW9uXFRlc3RDb25uZWN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Paiements/Arrieres.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpZW1lbnRzXEFycmllcmVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Paiements/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpZW1lbnRzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Paiements/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpZW1lbnRzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Paiements/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpZW1lbnRzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Paiements/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpZW1lbnRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Paiements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpZW1lbnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Services/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Shared/_ErrorMessages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9FcnJvck1lc3NhZ2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/Test/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVzdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/Badnson/L3-Web-App/IITWebApp/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

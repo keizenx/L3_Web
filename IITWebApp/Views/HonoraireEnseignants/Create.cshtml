@@ -1,0 +1,204 @@
+@model IITWebApp.Models.HonoraireEnseignant
+
+@{
+    ViewData["Title"] = "Créer Honoraire";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-12">
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-primary text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-plus me-2"></i>
+                    Créer un nouvel Honoraire d'Enseignant
+                </h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="IdEnseignant" class="form-label">
+                                    <i class="fas fa-user-tie me-1"></i> Enseignant *
+                                </label>
+                                <select asp-for="IdEnseignant" class="form-control" asp-items="ViewBag.IdEnseignant">
+                                    <option value="">Sélectionner un enseignant</option>
+                                </select>
+                                <span asp-validation-for="IdEnseignant" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="IdCours" class="form-label">
+                                    <i class="fas fa-book me-1"></i> Cours *
+                                </label>
+                                <select asp-for="IdCours" class="form-control" asp-items="ViewBag.IdCours">
+                                    <option value="">Sélectionner un cours</option>
+                                </select>
+                                <span asp-validation-for="IdCours" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Mois" class="form-label">
+                                    <i class="fas fa-calendar-alt me-1"></i> Mois *
+                                </label>
+                                <select asp-for="Mois" class="form-control">
+                                    <option value="">Sélectionner un mois</option>
+                                    <option value="Janvier">Janvier</option>
+                                    <option value="Février">Février</option>
+                                    <option value="Mars">Mars</option>
+                                    <option value="Avril">Avril</option>
+                                    <option value="Mai">Mai</option>
+                                    <option value="Juin">Juin</option>
+                                    <option value="Juillet">Juillet</option>
+                                    <option value="Août">Août</option>
+                                    <option value="Septembre">Septembre</option>
+                                    <option value="Octobre">Octobre</option>
+                                    <option value="Novembre">Novembre</option>
+                                    <option value="Décembre">Décembre</option>
+                                </select>
+                                <span asp-validation-for="Mois" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Annee" class="form-label">
+                                    <i class="fas fa-calendar me-1"></i> Année *
+                                </label>
+                                <input asp-for="Annee" class="form-control" type="number" min="2020" max="2030" />
+                                <span asp-validation-for="Annee" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="MontantBase" class="form-label">
+                                    <i class="fas fa-coins me-1"></i> Montant de Base (FCFA)
+                                </label>
+                                <input asp-for="MontantBase" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="MontantBase" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="TauxHoraire" class="form-label">
+                                    <i class="fas fa-euro-sign me-1"></i> Taux Horaire (FCFA)
+                                </label>
+                                <input asp-for="TauxHoraire" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="TauxHoraire" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="NombreHeures" class="form-label">
+                                    <i class="fas fa-clock me-1"></i> Nombre d'Heures
+                                </label>
+                                <input asp-for="NombreHeures" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="NombreHeures" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Primes" class="form-label">
+                                    <i class="fas fa-plus-circle me-1"></i> Primes (FCFA)
+                                </label>
+                                <input asp-for="Primes" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="Primes" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Retenues" class="form-label">
+                                    <i class="fas fa-minus-circle me-1"></i> Retenues (FCFA)
+                                </label>
+                                <input asp-for="Retenues" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="Retenues" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="MontantTotal" class="form-label">
+                                    <i class="fas fa-calculator me-1"></i> Montant Total (FCFA) *
+                                </label>
+                                <input asp-for="MontantTotal" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="MontantTotal" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="StatutPaiement" class="form-label">
+                            <i class="fas fa-info-circle me-1"></i> Statut de Paiement
+                        </label>
+                        <select asp-for="StatutPaiement" class="form-control">
+                            <option value="non_paye">Non payé</option>
+                            <option value="en_cours">En cours</option>
+                            <option value="paye">Payé</option>
+                        </select>
+                        <span asp-validation-for="StatutPaiement" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="/HonoraireEnseignants" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Retour à la liste
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>
+                            Enregistrer l'Honoraire
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Calcul automatique du montant total
+        $(document).ready(function() {
+            function calculerMontantTotal() {
+                var montantBase = parseFloat($('#MontantBase').val()) || 0;
+                var tauxHoraire = parseFloat($('#TauxHoraire').val()) || 0;
+                var nombreHeures = parseFloat($('#NombreHeures').val()) || 0;
+                var primes = parseFloat($('#Primes').val()) || 0;
+                var retenues = parseFloat($('#Retenues').val()) || 0;
+
+                var total = (montantBase + (tauxHoraire * nombreHeures) + primes) - retenues;
+                $('#MontantTotal').val(total.toFixed(2));
+            }
+
+            // Écouter les changements sur les champs numériques
+            $('#MontantBase, #TauxHoraire, #NombreHeures, #Primes, #Retenues').on('input', calculerMontantTotal);
+
+            // Validation côté client
+            $('form').on('submit', function(e) {
+                if (!this.checkValidity()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                $(this).addClass('was-validated');
+            });
+        });
+    </script>
+}

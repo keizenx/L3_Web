@@ -1,0 +1,307 @@
+@{
+    ViewData["Title"] = "Promotion des Étudiants";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-arrow-up text-success me-2"></i>
+            Promotion des Étudiants
+        </h1>
+        <a href="/Home/Phase1Dashboard" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left fa-sm"></i> Retour au tableau de bord
+        </a>
+    </div>
+
+    <!-- Informations sur le système de promotion -->
+    <div class="alert alert-info mb-4">
+        <h5><i class="fas fa-info-circle me-2"></i>Système de Promotion Automatique</h5>
+        <p class="mb-2">Le système promeut automatiquement les étudiants selon les critères suivants :</p>
+        <ul class="mb-0">
+            <li><strong>Moyenne ≥ 10.00</strong> : Promotion automatique vers le niveau supérieur</li>
+            <li><strong>Moyenne < 10.00</strong> : Redoublement dans la même classe</li>
+            <li><strong>L1GL → L2GL → L3GL</strong> : Progression normale</li>
+        </ul>
+    </div>
+
+    <!-- Sélection de l'année académique -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-calendar me-2"></i>Sélection de l'Année Académique
+            </h6>
+        </div>
+        <div class="card-body">
+            <form id="promotionForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="anneeAcademique" class="form-label">Année Académique *</label>
+                            <select id="anneeAcademique" class="form-select" required>
+                                <option value="">Sélectionner l'année...</option>
+                                <option value="2024-2025">2024-2025</option>
+                                <option value="2025-2026">2025-2026</option>
+                                <option value="2026-2027">2026-2027</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="niveauSource" class="form-label">Niveau Source *</label>
+                            <select id="niveauSource" class="form-select" required>
+                                <option value="">Sélectionner le niveau...</option>
+                                <option value="L1GL">L1GL (Licence 1 Génie Logiciel)</option>
+                                <option value="L2GL">L2GL (Licence 2 Génie Logiciel)</option>
+                                <option value="L1RT">L1RT (Licence 1 Réseau & Télécom)</option>
+                                <option value="L2RT">L2RT (Licence 2 Réseau & Télécom)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="analyserPromotions()">
+                    <i class="fas fa-search me-2"></i>Analyser les Promotions
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Résultats de l'analyse -->
+    <div id="resultatsPromotion" class="card shadow mb-4" style="display: none;">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-chart-bar me-2"></i>Résultats de l'Analyse
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card border-left-success">
+                        <div class="card-body text-center">
+                            <h4 class="text-success" id="nbPromus">0</h4>
+                            <p class="mb-0">Étudiants Promus</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-left-warning">
+                        <div class="card-body text-center">
+                            <h4 class="text-warning" id="nbRedoublants">0</h4>
+                            <p class="mb-0">Étudiants Redoublants</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-left-info">
+                        <div class="card-body text-center">
+                            <h4 class="text-info" id="nbTotal">0</h4>
+                            <p class="mb-0">Total Étudiants</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liste des étudiants -->
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tablePromotions">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Nom & Prénom</th>
+                            <th>Moyenne</th>
+                            <th>Classe Actuelle</th>
+                            <th>Nouvelle Classe</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyPromotions">
+                        <!-- Données dynamiques -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Actions de promotion -->
+            <div class="mt-4">
+                <button type="button" class="btn btn-success" onclick="executerPromotions()" id="btnExecuterPromotions" disabled>
+                    <i class="fas fa-check-circle me-2"></i>Exécuter les Promotions
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="annulerPromotions()">
+                    <i class="fas fa-times me-2"></i>Annuler
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historique des promotions -->
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-history me-2"></i>Historique des Promotions
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Année Académique</th>
+                            <th>Niveau Source</th>
+                            <th>Niveau Destination</th>
+                            <th>Nombre Promus</th>
+                            <th>Utilisateur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-09-17</td>
+                            <td>2025-2026</td>
+                            <td>L2GL</td>
+                            <td>L3GL</td>
+                            <td>5</td>
+                            <td>Admin</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-17</td>
+                            <td>2024-2025</td>
+                            <td>L1GL</td>
+                            <td>L2GL</td>
+                            <td>56</td>
+                            <td>Admin</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Données simulées pour la démonstration
+        const etudiantsData = {
+            'L1GL': [
+                { matricule: 'IIT-0325', nom: 'ADOM ANGE-EMMANUEL', moyenne: 9.50, classe: 'L1GL', statut: 'redoublant' },
+                { matricule: 'IIT-0295', nom: 'AHOUSSI GOMIS AXEL', moyenne: 13.42, classe: 'L1GL', statut: 'promu' },
+                { matricule: 'IIT-0263', nom: 'ALOUKOU ARIEL JEAN', moyenne: 13.17, classe: 'L1GL', statut: 'promu' },
+                { matricule: 'IIT-0306', nom: 'AMON KABLAN STEPHANE', moyenne: 12.67, classe: 'L1GL', statut: 'promu' },
+                { matricule: 'IIT-0316', nom: 'BADOU KOFFI ANGE', moyenne: 9.67, classe: 'L1GL', statut: 'redoublant' }
+            ],
+            'L2GL': [
+                { matricule: 'IIT-0153', nom: 'KOFFI ORNELLA MARIE', moyenne: 16.40, classe: 'L2GL', statut: 'promu' },
+                { matricule: 'IIT-0241', nom: 'KOSSONOU YAO MARIE', moyenne: 16.00, classe: 'L2GL', statut: 'promu' },
+                { matricule: 'IIT-0188', nom: 'VESSIME YOHANN ANGE', moyenne: 14.80, classe: 'L2GL', statut: 'promu' },
+                { matricule: 'IIT-0179', nom: 'KONAN OUMAR VIVIEN', moyenne: 14.40, classe: 'L2GL', statut: 'promu' },
+                { matricule: 'IIT-0174', nom: 'TAHI EZAN FRANCK', moyenne: 14.10, classe: 'L2GL', statut: 'promu' }
+            ]
+        };
+
+        function analyserPromotions() {
+            const anneeAcademique = document.getElementById('anneeAcademique').value;
+            const niveauSource = document.getElementById('niveauSource').value;
+
+            if (!anneeAcademique || !niveauSource) {
+                alert('Veuillez sélectionner l\'année académique et le niveau source.');
+                return;
+            }
+
+            const etudiants = etudiantsData[niveauSource] || [];
+            const promus = etudiants.filter(e => e.statut === 'promu');
+            const redoublants = etudiants.filter(e => e.statut === 'redoublant');
+
+            // Mise à jour des statistiques
+            document.getElementById('nbPromus').textContent = promus.length;
+            document.getElementById('nbRedoublants').textContent = redoublants.length;
+            document.getElementById('nbTotal').textContent = etudiants.length;
+
+            // Mise à jour du tableau
+            const tbody = document.getElementById('tbodyPromotions');
+            tbody.innerHTML = '';
+
+            etudiants.forEach(etudiant => {
+                const nouvelleClasse = niveauSource.replace('L1', 'L2').replace('L2', 'L3');
+                const statutBadge = etudiant.statut === 'promu' 
+                    ? '<span class="badge bg-success">Promu</span>' 
+                    : '<span class="badge bg-warning">Redoublant</span>';
+                
+                const action = etudiant.statut === 'promu' 
+                    ? '<button class="btn btn-sm btn-success" onclick="promouvoirEtudiant(\'' + etudiant.matricule + '\')">Promouvoir</button>'
+                    : '<button class="btn btn-sm btn-secondary" disabled>Redouble</button>';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${etudiant.matricule}</td>
+                        <td>${etudiant.nom}</td>
+                        <td>${etudiant.moyenne}</td>
+                        <td>${etudiant.classe}</td>
+                        <td>${etudiant.statut === 'promu' ? nouvelleClasse : etudiant.classe}</td>
+                        <td>${statutBadge}</td>
+                        <td>${action}</td>
+                    </tr>
+                `;
+            });
+
+            // Afficher les résultats
+            document.getElementById('resultatsPromotion').style.display = 'block';
+            document.getElementById('btnExecuterPromotions').disabled = promus.length === 0;
+        }
+
+        function promouvoirEtudiant(matricule) {
+            if (confirm(`Confirmer la promotion de l'étudiant ${matricule} ?`)) {
+                // Simulation de la promotion
+                alert(`L'étudiant ${matricule} a été promu avec succès !`);
+                analyserPromotions(); // Recharger les données
+            }
+        }
+
+        function executerPromotions() {
+            const anneeAcademique = document.getElementById('anneeAcademique').value;
+            const niveauSource = document.getElementById('niveauSource').value;
+            const etudiants = etudiantsData[niveauSource] || [];
+            const promus = etudiants.filter(e => e.statut === 'promu');
+
+            if (confirm(`Confirmer la promotion de ${promus.length} étudiants ?`)) {
+                // Simulation de l'exécution des promotions
+                alert(`${promus.length} étudiants ont été promus avec succès !`);
+                
+                // Ajouter à l'historique
+                const historique = document.querySelector('.table tbody');
+                const nouvelleLigne = document.createElement('tr');
+                nouvelleLigne.innerHTML = `
+                    <td>${new Date().toISOString().split('T')[0]}</td>
+                    <td>${anneeAcademique}</td>
+                    <td>${niveauSource}</td>
+                    <td>${niveauSource.replace('L1', 'L2').replace('L2', 'L3')}</td>
+                    <td>${promus.length}</td>
+                    <td>Admin</td>
+                `;
+                historique.insertBefore(nouvelleLigne, historique.firstChild);
+            }
+        }
+
+        function annulerPromotions() {
+            document.getElementById('resultatsPromotion').style.display = 'none';
+            document.getElementById('promotionForm').reset();
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .border-left-success {
+            border-left: 0.25rem solid #1cc88a !important;
+        }
+        .border-left-warning {
+            border-left: 0.25rem solid #f6c23e !important;
+        }
+        .border-left-info {
+            border-left: 0.25rem solid #36b9cc !important;
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+}

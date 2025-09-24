@@ -1,0 +1,70 @@
+@model IITWebApp.Models.Cours
+
+@{
+    ViewData["Title"] = "Supprimer le cours";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0 text-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Confirmer la suppression
+        </h4>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Attention !</strong> Cette action est irréversible. Êtes-vous sûr de vouloir supprimer ce cours ?
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-4">Code :</dt>
+                    <dd class="col-sm-8">@Model.CodeCours</dd>
+
+                    <dt class="col-sm-4">Nom :</dt>
+                    <dd class="col-sm-8">@Model.NomCours</dd>
+
+                    <dt class="col-sm-4">Enseignant :</dt>
+                    <dd class="col-sm-8">@Model.Enseignant?.Nom @Model.Enseignant?.Prenom</dd>
+
+                    <dt class="col-sm-4">Classe :</dt>
+                    <dd class="col-sm-8">@Model.Classe?.NomClasse</dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-4">Filière :</dt>
+                    <dd class="col-sm-8">@Model.Filiere?.NomFiliere</dd>
+
+                    <dt class="col-sm-4">Semestre :</dt>
+                    <dd class="col-sm-8">@Model.Semestre</dd>
+
+                    <dt class="col-sm-4">Coefficient :</dt>
+                    <dd class="col-sm-8">@Model.Coefficient</dd>
+
+                    <dt class="col-sm-4">Statut :</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@(Model.Statut == "actif" ? "success" : "secondary")">
+                            @Model.Statut
+                        </span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <form asp-action="Delete" class="mt-4">
+            <input type="hidden" asp-for="IdCours" />
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Annuler
+                </a>
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash me-1"></i> Confirmer la suppression
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

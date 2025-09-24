@@ -1,0 +1,88 @@
+@model IEnumerable<IITWebApp.Models.Etudiant>
+
+@{
+    ViewData["Title"] = "Liste des Étudiants";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Gestion des Étudiants</h1>
+        <a href="/Etudiants/Create" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus fa-sm"></i> Nouvel Étudiant
+        </a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des Étudiants</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Nom Complet</th>
+                            <th>Date Naissance</th>
+                            <th>Sexe</th>
+                            <th>Téléphone</th>
+                            <th>Email</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Matricule</td>
+                                <td>@item.Nom @item.Prenom</td>
+                                <td>@item.DateNaissance.ToString("dd/MM/yyyy")</td>
+                                <td>@item.Sexe</td>
+                                <td>@item.Telephone</td>
+                                <td>@item.Email</td>
+                                <td>
+                                    <span class="badge @(item.Statut == "actif" ? "bg-success" : "bg-warning")">
+                                        @item.Statut
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Etudiants/Edit/@item.IdEtudiant" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/Etudiants/Details/@item.IdEtudiant" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="/Etudiants/Delete/@item.IdEtudiant" class="btn btn-sm btn-outline-danger" 
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                }
+            });
+        });
+    </script>
+}

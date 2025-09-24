@@ -1,0 +1,90 @@
+@model IEnumerable<IITWebApp.Models.Inscription>
+
+@{
+    ViewData["Title"] = "Liste des Inscriptions";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Gestion des Inscriptions</h1>
+        <a href="/Inscriptions/Create" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus fa-sm"></i> Nouvelle Inscription
+        </a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des Inscriptions</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Étudiant</th>
+                            <th>Classe</th>
+                            <th>Filière</th>
+                            <th>Année Académique</th>
+                            <th>Type</th>
+                            <th>Date Inscription</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Etudiant?.Nom @item.Etudiant?.Prenom</td>
+                                <td>@item.Classe?.NomClasse</td>
+                                <td>@item.Filiere?.NomFiliere</td>
+                                <td>@item.AnneeAcademique</td>
+                                <td>@item.TypeInscription</td>
+                                <td>@item.DateInscription.ToString("dd/MM/yyyy")</td>
+                                <td>@item.MontantInscription.ToString("C")</td>
+                                <td>
+                                    <span class="badge @(item.Statut == "valide" ? "bg-success" : item.Statut == "en attente" ? "bg-warning" : "bg-danger")">
+                                        @item.Statut
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Inscriptions/Edit/@item.IdInscription" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/Inscriptions/Details/@item.IdInscription" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="/Inscriptions/Delete/@item.IdInscription" class="btn btn-sm btn-outline-danger" 
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                }
+            });
+        });
+    </script>
+}

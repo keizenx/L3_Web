@@ -1,0 +1,204 @@
+@{
+    ViewData["Title"] = "Test de Connexion IIT";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">🔧 Test de Connexion et Diagnostic</h1>
+    </div>
+
+    <!-- Test de Connexion -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-database me-2"></i>État de la Connexion MySQL
+                    </h6>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.ConnectionTest.ToString().Contains("réussie"))
+                    {
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>@ViewBag.ConnectionTest
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>@ViewBag.ConnectionTest
+                        </div>
+                        @if (ViewBag.ErrorDetails != null)
+                        {
+                            <details>
+                                <summary>Détails de l'erreur</summary>
+                                <pre class="bg-light p-3 mt-2">@ViewBag.ErrorDetails</pre>
+                            </details>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques Phase 1 & 2 -->
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        📊 Phase 1 - Gestion Inscriptions & Paiements
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <td><i class="fas fa-users text-primary"></i> Étudiants</td>
+                            <td><span class="badge bg-primary">@ViewBag.TotalEtudiants</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-school text-info"></i> Classes</td>
+                            <td><span class="badge bg-info">@ViewBag.TotalClasses</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-graduation-cap text-success"></i> Filières</td>
+                            <td><span class="badge bg-success">@ViewBag.TotalFilieres</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-concierge-bell text-warning"></i> Services</td>
+                            <td><span class="badge bg-warning">@ViewBag.TotalServices</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        🎓 Phase 2 - Gestion Enseignement
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <td><i class="fas fa-chalkboard-teacher text-primary"></i> Enseignants</td>
+                            <td><span class="badge bg-primary">@ViewBag.TotalEnseignants</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-book text-info"></i> Cours</td>
+                            <td><span class="badge bg-info">@ViewBag.TotalCours</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Niveaux Disponibles -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-success">
+                        🎯 Niveaux d'Études Disponibles
+                    </h6>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(ViewBag.NiveauxDisponibles?.ToString()))
+                    {
+                        <div class="alert alert-success">
+                            <strong>Niveaux trouvés :</strong> @ViewBag.NiveauxDisponibles
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <strong>Aucun niveau trouvé.</strong> Vous devez insérer des données de base.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Derniers Étudiants -->
+    @if (ViewBag.DerniersEtudiants != null)
+    {
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-info">
+                            👨‍🎓 Derniers Étudiants Inscrits
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Matricule</th>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Niveau</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etudiant in ViewBag.DerniersEtudiants)
+                                    {
+                                        <tr>
+                                            <td><code>@etudiant.Matricule</code></td>
+                                            <td>@etudiant.Nom</td>
+                                            <td>@etudiant.Prenom</td>
+                                            <td><span class="badge bg-primary">@etudiant.Niveau</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Actions de Test -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        🚀 Actions de Test CRUD
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="/Test/TestCrud" class="btn btn-info btn-block">
+                                <i class="fas fa-database"></i> Test API CRUD
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Test/TestNiveaux" class="btn btn-success btn-block">
+                                <i class="fas fa-list"></i> Test Niveaux
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Etudiants/Create" class="btn btn-primary btn-block">
+                                <i class="fas fa-user-plus"></i> Créer Étudiant
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Etudiants" class="btn btn-secondary btn-block">
+                                <i class="fas fa-users"></i> Liste Étudiants
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

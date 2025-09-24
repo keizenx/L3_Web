@@ -1,0 +1,60 @@
+@model IITWebApp.Models.Enseignant
+
+@{
+    ViewData["Title"] = "Détails de l'enseignant";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            <i class="fas fa-user-tie me-2"></i>
+            Détails de l'enseignant
+        </h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Matricule :</dt>
+            <dd class="col-sm-9">@Model.Matricule</dd>
+
+            <dt class="col-sm-3">Nom complet :</dt>
+            <dd class="col-sm-9">@Model.Nom @Model.Prenom</dd>
+
+            <dt class="col-sm-3">Email :</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Téléphone :</dt>
+            <dd class="col-sm-9">@Model.Telephone</dd>
+
+            <dt class="col-sm-3">Spécialité :</dt>
+            <dd class="col-sm-9">@Model.Specialite</dd>
+
+            <dt class="col-sm-3">Grade :</dt>
+            <dd class="col-sm-9">@Model.Grade</dd>
+
+            <dt class="col-sm-3">Niveau d'expérience :</dt>
+            <dd class="col-sm-9">@Model.NiveauExperience</dd>
+
+            <dt class="col-sm-3">Statut :</dt>
+            <dd class="col-sm-9">
+                <span class="badge bg-@(Model.Statut == "Actif" ? "success" : "secondary")">
+                    @Model.Statut
+                </span>
+            </dd>
+
+            <dt class="col-sm-3">Date de création :</dt>
+            <dd class="col-sm-9">@Model.DateCreation?.ToString("dd/MM/yyyy")</dd>
+        </dl>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+            </a>
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.IdEnseignant" class="btn btn-primary">
+                    <i class="fas fa-edit me-1"></i> Modifier
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

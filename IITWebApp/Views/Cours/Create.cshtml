@@ -1,0 +1,191 @@
+@model IITWebApp.Models.Cours
+
+@{
+    ViewData["Title"] = "Créer Cours";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-12">
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-primary text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-plus me-2"></i>
+                    Créer un nouveau Cours
+                </h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="NomCours" class="form-label">
+                                    <i class="fas fa-book me-1"></i> Nom du Cours *
+                                </label>
+                                <input asp-for="NomCours" class="form-control" />
+                                <span asp-validation-for="NomCours" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="CodeCours" class="form-label">
+                                    <i class="fas fa-hashtag me-1"></i> Code du Cours *
+                                </label>
+                                <input asp-for="CodeCours" class="form-control" placeholder="Ex: INF101" />
+                                <span asp-validation-for="CodeCours" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="IdEnseignant" class="form-label">
+                                    <i class="fas fa-user-tie me-1"></i> Enseignant *
+                                </label>
+                                <select asp-for="IdEnseignant" class="form-control" asp-items="ViewBag.IdEnseignant">
+                                    <option value="">Sélectionner un enseignant</option>
+                                </select>
+                                <span asp-validation-for="IdEnseignant" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="IdClasse" class="form-label">
+                                    <i class="fas fa-users me-1"></i> Classe *
+                                </label>
+                                <select asp-for="IdClasse" class="form-control" asp-items="ViewBag.IdClasse">
+                                    <option value="">Sélectionner une classe</option>
+                                </select>
+                                <span asp-validation-for="IdClasse" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="IdFiliere" class="form-label">
+                                    <i class="fas fa-graduation-cap me-1"></i> Filière *
+                                </label>
+                                <select asp-for="IdFiliere" class="form-control" asp-items="ViewBag.IdFiliere">
+                                    <option value="">Sélectionner une filière</option>
+                                </select>
+                                <span asp-validation-for="IdFiliere" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="NombreHeures" class="form-label">
+                                    <i class="fas fa-clock me-1"></i> Nombre d'Heures
+                                </label>
+                                <input asp-for="NombreHeures" class="form-control" type="number" min="1" />
+                                <span asp-validation-for="NombreHeures" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Coefficient" class="form-label">
+                                    <i class="fas fa-star me-1"></i> Coefficient
+                                </label>
+                                <input asp-for="Coefficient" class="form-control" type="number" step="0.5" min="0" />
+                                <span asp-validation-for="Coefficient" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Semestre" class="form-label">
+                                    <i class="fas fa-calendar-alt me-1"></i> Semestre
+                                </label>
+                                <select asp-for="Semestre" class="form-control">
+                                    <option value="">Sélectionner un semestre</option>
+                                    <option value="S1">Semestre 1</option>
+                                    <option value="S2">Semestre 2</option>
+                                    <option value="S3">Semestre 3</option>
+                                    <option value="S4">Semestre 4</option>
+                                    <option value="S5">Semestre 5</option>
+                                    <option value="S6">Semestre 6</option>
+                                </select>
+                                <span asp-validation-for="Semestre" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="AnneeAcademique" class="form-label">
+                                    <i class="fas fa-calendar me-1"></i> Année Académique
+                                </label>
+                                <select asp-for="AnneeAcademique" class="form-control">
+                                    <option value="">Sélectionner une année</option>
+                                    <option value="2023-2024">2023-2024</option>
+                                    <option value="2024-2025">2024-2025</option>
+                                    <option value="2025-2026">2025-2026</option>
+                                    <option value="2026-2027">2026-2027</option>
+                                </select>
+                                <span asp-validation-for="AnneeAcademique" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Statut" class="form-label">
+                                    <i class="fas fa-info-circle me-1"></i> Statut
+                                </label>
+                                <select asp-for="Statut" class="form-control">
+                                    <option value="actif">Actif</option>
+                                    <option value="inactif">Inactif</option>
+                                    <option value="archive">Archivé</option>
+                                </select>
+                                <span asp-validation-for="Statut" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">
+                            <i class="fas fa-align-left me-1"></i> Description
+                        </label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Décrire le contenu du cours..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="/Cours" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Retour à la liste
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>
+                            Créer le Cours
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Validation côté client
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                if (!this.checkValidity()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                $(this).addClass('was-validated');
+            });
+        });
+    </script>
+}

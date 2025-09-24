@@ -1,0 +1,82 @@
+@model IITWebApp.Models.Absence
+
+@{
+    ViewData["Title"] = "Modifier l'absence";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            <i class="fas fa-edit me-2"></i>
+            Modifier l'absence
+        </h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <input type="hidden" asp-for="IdAbsence" />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="IdEtudiant" class="form-label">Étudiant</label>
+                        <select asp-for="IdEtudiant" class="form-control" asp-items="ViewBag.IdEtudiant">
+                            <option value="">Sélectionner un étudiant...</option>
+                        </select>
+                        <span asp-validation-for="IdEtudiant" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="IdCours" class="form-label">Cours</label>
+                        <select asp-for="IdCours" class="form-control" asp-items="ViewBag.IdCours">
+                            <option value="">Sélectionner un cours...</option>
+                        </select>
+                        <span asp-validation-for="IdCours" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="DateAbsence" class="form-label">Date d'absence</label>
+                        <input asp-for="DateAbsence" class="form-control" type="date" />
+                        <span asp-validation-for="DateAbsence" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="TypeAbsence" class="form-label">Type d'absence</label>
+                        <select asp-for="TypeAbsence" class="form-control">
+                            <option value="">Sélectionner...</option>
+                            <option value="Justifiée" selected="@(Model.TypeAbsence == "Justifiée")">Justifiée</option>
+                            <option value="Non justifiée" selected="@(Model.TypeAbsence == "Non justifiée")">Non justifiée</option>
+                        </select>
+                        <span asp-validation-for="TypeAbsence" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Motif" class="form-label">Motif</label>
+                <textarea asp-for="Motif" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Motif" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

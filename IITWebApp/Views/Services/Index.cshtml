@@ -1,0 +1,565 @@
+@model IEnumerable<IITWebApp.Models.Service>
+
+@{
+    ViewData["Title"] = "Gestion des Services";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-cogs text-primary me-2"></i>
+            Gestion des Services Associés
+        </h1>
+        <div>
+            <a href="/Services/Create" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus fa-sm"></i> Nouveau Service
+            </a>
+            <a href="/Home/Phase1Dashboard" class="btn btn-secondary btn-sm">
+                <i class="fas fa-arrow-left fa-sm"></i> Retour au tableau de bord
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistiques des services -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Services
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-cogs fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Services Actifs
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">6</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Souscriptions Actives
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">45</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Revenus Mensuels
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">2.1M FCFA</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtres et recherche -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-search me-2"></i>Recherche et Filtres
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="rechercheService" class="form-label">Rechercher un service</label>
+                        <input type="text" id="rechercheService" class="form-control" placeholder="Nom du service...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="filtreType" class="form-label">Type de service</label>
+                        <select id="filtreType" class="form-select">
+                            <option value="">Tous les types</option>
+                            <option value="Alimentation">Alimentation</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Hébergement">Hébergement</option>
+                            <option value="Éducation">Éducation</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="filtreStatut" class="form-label">Statut</label>
+                        <select id="filtreStatut" class="form-select">
+                            <option value="">Tous les statuts</option>
+                            <option value="actif">Actif</option>
+                            <option value="inactif">Inactif</option>
+                            <option value="suspendu">Suspendu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label class="form-label">&nbsp;</label>
+                        <div>
+                            <button type="button" class="btn btn-primary" onclick="appliquerFiltres()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="reinitialiserFiltres()">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liste des services -->
+    <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-list me-2"></i>Liste des Services
+            </h6>
+            <div>
+                <button type="button" class="btn btn-success btn-sm" onclick="exporterServices()">
+                    <i class="fas fa-download me-2"></i>Exporter
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tableServices">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom du Service</th>
+                            <th>Type</th>
+                            <th>Prix</th>
+                            <th>Période</th>
+                            <th>Statut</th>
+                            <th>Souscriptions</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <strong>Cantine Universitaire</strong><br>
+                                <small class="text-muted">Repas complets midi et soir</small>
+                            </td>
+                            <td><span class="badge bg-primary">Alimentation</span></td>
+                            <td><strong>50.000 FCFA</strong><br><small class="text-muted">/mois</small></td>
+                            <td>10 mois</td>
+                            <td><span class="badge bg-success">Actif</span></td>
+                    <td>
+                        <span class="badge bg-info">@(ViewBag.ServicesActifsAlt > 0 ? ViewBag.TotalSouscriptionsAlt + " étudiants" : "0 étudiants")</span><br>
+                        <small class="text-muted">@(ViewBag.RevenusMensuelsAlt > 0 ? ViewBag.RevenusMensuelsAlt.ToString("N0") + " FCFA/mois" : "0 FCFA/mois")</small>
+                    </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails(1)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="modifierService(1)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info" onclick="voirSouscriptions(1)">
+                                    <i class="fas fa-users"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>
+                                <strong>Transport Scolaire</strong><br>
+                                <small class="text-muted">Navettes vers l'université</small>
+                            </td>
+                            <td><span class="badge bg-secondary">Transport</span></td>
+                            <td><strong>30.000 FCFA</strong><br><small class="text-muted">/mois</small></td>
+                            <td>10 mois</td>
+                            <td><span class="badge bg-success">Actif</span></td>
+                    <td>
+                        <span class="badge bg-info">@(ViewBag.ServicesActifsAlt > 0 ? ViewBag.TotalSouscriptionsAlt + " étudiants" : "0 étudiants")</span><br>
+                        <small class="text-muted">@(ViewBag.RevenusMensuelsAlt > 0 ? ViewBag.RevenusMensuelsAlt.ToString("N0") + " FCFA/mois" : "0 FCFA/mois")</small>
+                    </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails(2)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="modifierService(2)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info" onclick="voirSouscriptions(2)">
+                                    <i class="fas fa-users"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>
+                                <strong>Accès Bibliothèque</strong><br>
+                                <small class="text-muted">Accès illimité + prêt de livres</small>
+                            </td>
+                            <td><span class="badge bg-info">Éducation</span></td>
+                            <td><strong>20.000 FCFA</strong><br><small class="text-muted">/an</small></td>
+                            <td>12 mois</td>
+                            <td><span class="badge bg-success">Actif</span></td>
+                    <td>
+                        <span class="badge bg-info">@(ViewBag.ServicesActifsAlt > 0 ? ViewBag.TotalSouscriptionsAlt + " étudiants" : "0 étudiants")</span><br>
+                        <small class="text-muted">@(ViewBag.RevenusMensuelsAlt > 0 ? ViewBag.RevenusMensuelsAlt.ToString("N0") + " FCFA/an" : "0 FCFA/an")</small>
+                    </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails(3)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="modifierService(3)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info" onclick="voirSouscriptions(3)">
+                                    <i class="fas fa-users"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>
+                                <strong>Hébergement Étudiant</strong><br>
+                                <small class="text-muted">Chambre individuelle avec sanitaires</small>
+                            </td>
+                            <td><span class="badge bg-warning">Hébergement</span></td>
+                            <td><strong>80.000 FCFA</strong><br><small class="text-muted">/mois</small></td>
+                            <td>10 mois</td>
+                            <td><span class="badge bg-warning">Suspendu</span></td>
+                            <td>
+                                <span class="badge bg-secondary">0 étudiants</span><br>
+                                <small class="text-muted">0 FCFA/mois</small>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails(4)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="modifierService(4)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success" onclick="reactiverService(4)">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>
+                                <strong>Accès Internet</strong><br>
+                                <small class="text-muted">WiFi haute vitesse sur le campus</small>
+                            </td>
+                            <td><span class="badge bg-success">Éducation</span></td>
+                            <td><strong>15.000 FCFA</strong><br><small class="text-muted">/mois</small></td>
+                            <td>10 mois</td>
+                            <td><span class="badge bg-success">Actif</span></td>
+                    <td>
+                        <span class="badge bg-info">@(ViewBag.ServicesActifsAlt > 0 ? ViewBag.TotalSouscriptionsAlt + " étudiants" : "0 étudiants")</span><br>
+                        <small class="text-muted">@(ViewBag.RevenusMensuelsAlt > 0 ? ViewBag.RevenusMensuelsAlt.ToString("N0") + " FCFA/mois" : "0 FCFA/mois")</small>
+                    </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="voirDetails(5)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="modifierService(5)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info" onclick="voirSouscriptions(5)">
+                                    <i class="fas fa-users"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour voir les détails d'un service -->
+<div class="modal fade" id="modalDetails" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-info-circle me-2"></i>Détails du Service
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="serviceDetails">
+                    <!-- Contenu dynamique -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-warning" onclick="modifierServiceFromModal()">
+                    <i class="fas fa-edit me-2"></i>Modifier
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour voir les souscriptions -->
+<div class="modal fade" id="modalSouscriptions" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-users me-2"></i>Souscriptions au Service
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Matricule</th>
+                                <th>Nom & Prénom</th>
+                                <th>Classe</th>
+                                <th>Date Début</th>
+                                <th>Date Fin</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="souscriptionsTable">
+                            <!-- Contenu dynamique -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-success" onclick="nouvelleSouscription()">
+                    <i class="fas fa-plus me-2"></i>Nouvelle Souscription
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Données des services (en réalité, ceci viendrait de la base de données)
+        const servicesData = {
+            1: {
+                nom: 'Cantine Universitaire',
+                description: 'Repas complets midi et soir avec menu varié',
+                type: 'Alimentation',
+                prix: 50000,
+                periode: 'mois',
+                duree: 10,
+                statut: 'actif',
+                souscriptions: 25
+            },
+            2: {
+                nom: 'Transport Scolaire',
+                description: 'Navettes vers l\'université depuis les points de collecte',
+                type: 'Transport',
+                prix: 30000,
+                periode: 'mois',
+                duree: 10,
+                statut: 'actif',
+                souscriptions: 18
+            }
+        };
+
+        function appliquerFiltres() {
+            const recherche = document.getElementById('rechercheService').value;
+            const type = document.getElementById('filtreType').value;
+            const statut = document.getElementById('filtreStatut').value;
+            
+            console.log('Filtres appliqués:', { recherche, type, statut });
+            alert('Filtres appliqués avec succès !');
+        }
+
+        function reinitialiserFiltres() {
+            document.getElementById('rechercheService').value = '';
+            document.getElementById('filtreType').value = '';
+            document.getElementById('filtreStatut').value = '';
+            alert('Filtres réinitialisés !');
+        }
+
+        function voirDetails(serviceId) {
+            const service = servicesData[serviceId];
+            if (!service) {
+                alert('Service non trouvé.');
+                return;
+            }
+
+            document.getElementById('serviceDetails').innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><strong>Nom du Service:</strong></h6>
+                        <p>${service.nom}</p>
+                        
+                        <h6><strong>Description:</strong></h6>
+                        <p>${service.description}</p>
+                        
+                        <h6><strong>Type:</strong></h6>
+                        <p><span class="badge bg-primary">${service.type}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><strong>Prix:</strong></h6>
+                        <p><strong>${service.prix.toLocaleString()} FCFA / ${service.periode}</strong></p>
+                        
+                        <h6><strong>Durée:</strong></h6>
+                        <p>${service.duree} ${service.periode}</p>
+                        
+                        <h6><strong>Statut:</strong></h6>
+                        <p><span class="badge bg-success">${service.statut}</span></p>
+                        
+                        <h6><strong>Souscriptions Actives:</strong></h6>
+                        <p><span class="badge bg-info">${service.souscriptions} étudiants</span></p>
+                    </div>
+                </div>
+            `;
+
+            const modal = new bootstrap.Modal(document.getElementById('modalDetails'));
+            modal.show();
+        }
+
+        function modifierService(serviceId) {
+            alert(`Modifier le service ID: ${serviceId}`);
+            // Rediriger vers la page de modification
+            // window.location.href = `/Services/Edit/${serviceId}`;
+        }
+
+        function modifierServiceFromModal() {
+            alert('Redirection vers la page de modification...');
+        }
+
+        function voirSouscriptions(serviceId) {
+            // Données simulées des souscriptions
+            const souscriptions = [
+                { matricule: 'IIT-0244', nom: 'BELELEY FRANCK', classe: 'L2GL', dateDebut: '2024-09-01', dateFin: '2025-06-30', statut: 'active' },
+                { matricule: 'IIT-0153', nom: 'KOFFI ORNELLA', classe: 'L2GL', dateDebut: '2024-09-01', dateFin: '2025-06-30', statut: 'active' },
+                { matricule: 'IIT-0325', nom: 'ADOM ANGE-EMMANUEL', classe: 'L1GL', dateDebut: '2024-09-01', dateFin: '2025-06-30', statut: 'expiree' }
+            ];
+
+            let tableContent = '';
+            souscriptions.forEach(sub => {
+                const statutBadge = sub.statut === 'active' ? 'bg-success' : 'bg-warning';
+                tableContent += `
+                    <tr>
+                        <td>${sub.matricule}</td>
+                        <td>${sub.nom}</td>
+                        <td>${sub.classe}</td>
+                        <td>${sub.dateDebut}</td>
+                        <td>${sub.dateFin}</td>
+                        <td><span class="badge ${statutBadge}">${sub.statut}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="voirDetailsSouscription('${sub.matricule}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-warning" onclick="modifierSouscription('${sub.matricule}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('souscriptionsTable').innerHTML = tableContent;
+
+            const modal = new bootstrap.Modal(document.getElementById('modalSouscriptions'));
+            modal.show();
+        }
+
+        function reactiverService(serviceId) {
+            if (confirm('Confirmer la réactivation de ce service ?')) {
+                alert('Service réactivé avec succès !');
+                location.reload();
+            }
+        }
+
+        function nouvelleSouscription() {
+            alert('Redirection vers le formulaire de nouvelle souscription...');
+        }
+
+        function voirDetailsSouscription(matricule) {
+            alert(`Voir les détails de la souscription de l'étudiant ${matricule}`);
+        }
+
+        function modifierSouscription(matricule) {
+            alert(`Modifier la souscription de l'étudiant ${matricule}`);
+        }
+
+        function exporterServices() {
+            alert('Export des services en cours...');
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .border-left-primary {
+            border-left: 0.25rem solid #4e73df !important;
+        }
+        .border-left-success {
+            border-left: 0.25rem solid #1cc88a !important;
+        }
+        .border-left-info {
+            border-left: 0.25rem solid #36b9cc !important;
+        }
+        .border-left-warning {
+            border-left: 0.25rem solid #f6c23e !important;
+        }
+        .table th {
+            background-color: #f8f9fc;
+            font-weight: 600;
+        }
+        .btn-sm {
+            margin: 1px;
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+}

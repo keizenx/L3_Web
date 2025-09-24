@@ -1,0 +1,113 @@
+@model IITWebApp.Models.Etudiant
+
+@{
+    ViewData["Title"] = "Détails de l'étudiant";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            <i class="fas fa-user me-2"></i>
+            Détails de l'étudiant
+        </h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-4">Nom complet :</dt>
+                    <dd class="col-sm-8">@Model.Nom @Model.Prenom</dd>
+                    
+                    <dt class="col-sm-4">Matricule :</dt>
+                    <dd class="col-sm-8">@Model.Matricule</dd>
+                    
+                    <dt class="col-sm-4">Email :</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+                    
+                    <dt class="col-sm-4">Téléphone :</dt>
+                    <dd class="col-sm-8">@Model.Telephone</dd>
+                    
+                    <dt class="col-sm-4">Date de naissance :</dt>
+                    <dd class="col-sm-8">@Model.DateNaissance.ToString("dd/MM/yyyy")</dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-4">Lieu de naissance :</dt>
+                    <dd class="col-sm-8">@Model.LieuNaissance</dd>
+                    
+                    <dt class="col-sm-4">Nationalité :</dt>
+                    <dd class="col-sm-8">@Model.Nationalite</dd>
+                    
+                    <dt class="col-sm-4">Sexe :</dt>
+                    <dd class="col-sm-8">@(Model.Sexe == "M" ? "Masculin" : "Féminin")</dd>
+                    
+                    <dt class="col-sm-4">Statut :</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@(Model.Statut == "Actif" ? "success" : "secondary")">
+                            @Model.Statut
+                        </span>
+                    </dd>
+                    
+                    <dt class="col-sm-4">Date de création :</dt>
+                    <dd class="col-sm-8">@Model.DateCreation?.ToString("dd/MM/yyyy")</dd>
+                </dl>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <dt class="col-sm-2">Adresse :</dt>
+            <dd class="col-sm-10">@Model.Adresse</dd>
+        </div>
+        
+        @if (Model.Inscriptions != null && Model.Inscriptions.Any())
+        {
+            <div class="mt-4">
+                <h5><i class="fas fa-graduation-cap me-2"></i> Inscriptions</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Année académique</th>
+                                <th>Filière</th>
+                                <th>Classe</th>
+                                <th>Date d'inscription</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var inscription in Model.Inscriptions)
+                            {
+                                <tr>
+                                    <td>@inscription.AnneeAcademique</td>
+                                    <td>@(inscription.Filiere?.NomFiliere ?? "N/A")</td>
+                                    <td>@(inscription.Classe?.NomClasse ?? "N/A")</td>
+                                    <td>@inscription.DateInscription.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <span class="badge bg-@(inscription.Statut == "validé" ? "success" : "warning")">
+                                            @inscription.Statut
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+            </a>
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.IdEtudiant" class="btn btn-primary">
+                    <i class="fas fa-edit me-1"></i> Modifier
+                </a>
+                <a asp-action="Delete" asp-route-id="@Model.IdEtudiant" class="btn btn-danger">
+                    <i class="fas fa-trash me-1"></i> Supprimer
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+@model IITWebApp.Models.Inscription
+
+@{
+    ViewData["Title"] = "Supprimer Inscription";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-danger text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-trash-alt me-2"></i>
+                    Confirmer la Suppression
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Attention!</strong> Cette action est irréversible. Êtes-vous sûr de vouloir supprimer cette inscription ?
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Étudiant:</strong>
+                        <p class="text-muted">@Model.Etudiant?.Nom @Model.Etudiant?.Prenom</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Classe:</strong>
+                        <p class="text-muted">@Model.Classe?.NomClasse</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Filière:</strong>
+                        <p class="text-muted">@Model.Filiere?.NomFiliere</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Année Académique:</strong>
+                        <p class="text-muted">@Model.AnneeAcademique</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Type d'Inscription:</strong>
+                        <p class="text-muted">@Model.TypeInscription</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Montant:</strong>
+                        <p class="text-muted">@Model.MontantInscription.ToString("N0") FCFA</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Statut:</strong>
+                        <span class="badge bg-@(Model.Statut == "validée" ? "success" : Model.Statut == "en attente" ? "warning" : "secondary")">@Model.Statut</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Date d'Inscription:</strong>
+                        <p class="text-muted">@Model.DateInscription.ToShortDateString()</p>
+                    </div>
+                </div>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="IdInscription" />
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="/Inscriptions" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Annuler
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i>
+                            Confirmer la Suppression
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

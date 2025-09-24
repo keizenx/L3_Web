@@ -1,0 +1,158 @@
+@{
+    ViewData["Title"] = "Dashboard - IIT University";
+}
+
+<!-- En-tête IIT Style -->
+<div class="dashboard-header">
+    <h1 class="dashboard-title">
+        <i class="fas fa-university me-3"></i>
+        Bienvenue à IIT
+    </h1>
+    <p class="dashboard-subtitle">Institut Ivoirien de Technologie - Système de gestion intégré</p>
+</div>
+
+<!-- Section présentation IIT -->
+<div class="card mb-5">
+    <div class="card-body text-center">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h3 class="text-gradient mb-4">
+                    <i class="fas fa-graduation-cap me-2"></i>
+                    L'Institut Ivoirien de Technologie
+                </h3>
+                <p class="lead mb-4">
+                    Est une université privée composée de trois écoles et un centre de formation continue
+                    agréé par le FDFP (Fonds de Développement de la Formation Professionnelle).
+                </p>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="school-card">
+                            <i class="fas fa-building fa-3x text-primary mb-3"></i>
+                            <h5>IIT Business School</h5>
+                            <p>Commerce et Gestion</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="school-card">
+                            <i class="fas fa-cogs fa-3x text-primary mb-3"></i>
+                            <h5>IIT Engineering</h5>
+                            <p>Ingénierie et Technologie</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="school-card">
+                            <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                            <h5>Formation Continue</h5>
+                            <p>Développement professionnel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistiques avec le nouveau design -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-number">@ViewBag.TotalEtudiants</div>
+        <div class="stat-label">Étudiants Inscrits</div>
+        <div class="stat-description">Étudiants actuellement inscrits</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">@ViewBag.TotalInscriptions</div>
+        <div class="stat-label">Inscriptions</div>
+        <div class="stat-description">Inscriptions en cours</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">@ViewBag.TotalPaiements</div>
+        <div class="stat-label">Paiements</div>
+        <div class="stat-description">Paiements traités</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">@ViewBag.TotalServices</div>
+        <div class="stat-label">Services</div>
+        <div class="stat-description">Services disponibles</div>
+    </div>
+</div>
+
+<!-- Grille de contenu -->
+<div class="content-grid">
+    <!-- Actions rapides -->
+    <div class="card">
+        <h3>
+            <i class="fas fa-bolt"></i>
+            Actions Rapides
+        </h3>
+        <div class="action-buttons">
+            <a href="/Etudiants/Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nouvel Étudiant
+            </a>
+            <a href="/Inscriptions/Create" class="btn btn-success">
+                <i class="fas fa-clipboard-check"></i> Nouvelle Inscription
+            </a>
+            <a href="/Paiements/Create" class="btn btn-info">
+                <i class="fas fa-credit-card"></i> Nouveau Paiement
+            </a>
+            <a href="/Etudiants" class="btn btn-warning">
+                <i class="fas fa-list"></i> Voir Tous
+            </a>
+        </div>
+    </div>
+    
+    <!-- Statut système -->
+    <div class="card">
+        <h3>
+            <i class="fas fa-server"></i>
+            Statut du Système
+        </h3>
+        <div class="status-grid">
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <div>
+                    <strong>Base de données</strong>
+                    <div class="text-success">Connectée</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <div>
+                    <strong>Application Web</strong>
+                    <div class="text-success">Opérationnelle</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <div>
+                    <strong>Services</strong>
+                    <div class="text-success">Tous actifs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Informations système -->
+<div class="system-info">
+    <h4>
+        <i class="fas fa-info-circle"></i>
+        Informations Système
+    </h4>
+    <div class="info-grid">
+        <div class="info-item">
+            <strong>Université :</strong> <span>IIT - Institut International de Technologie</span>
+        </div>
+        <div class="info-item">
+            <strong>Version :</strong> <span>1.0.0</span>
+        </div>
+        <div class="info-item">
+            <strong>Base de données :</strong> <span>MySQL</span>
+        </div>
+        <div class="info-item">
+            <strong>Framework :</strong> <span>ASP.NET Core MVC</span>
+        </div>
+    </div>
+</div>

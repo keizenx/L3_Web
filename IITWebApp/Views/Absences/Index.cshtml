@@ -1,0 +1,97 @@
+@model IEnumerable<IITWebApp.Models.Absence>
+
+@{
+    ViewData["Title"] = "Gestion des Absences";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-gradient">
+                <i class="fas fa-calendar-times me-3"></i>
+                Gestion des Absences
+            </h2>
+            <a href="/Absences/Create" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>
+                Nouvelle Absence
+            </a>
+        </div>
+
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    Liste des Absences
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="fas fa-user me-1"></i> Étudiant</th>
+                                <th><i class="fas fa-book me-1"></i> Cours</th>
+                                <th><i class="fas fa-calendar me-1"></i> Date</th>
+                                <th><i class="fas fa-clock me-1"></i> Durée (h)</th>
+                                <th><i class="fas fa-exclamation-triangle me-1"></i> Type</th>
+                                <th><i class="fas fa-check-circle me-1"></i> Justifiée</th>
+                                <th><i class="fas fa-cog me-1"></i> Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any())
+                            {
+                                @foreach (var absence in Model)
+                                {
+                                    <tr>
+                                        <td>@absence.Etudiant?.Nom @absence.Etudiant?.Prenom</td>
+                                        <td>@absence.Cours?.NomCours</td>
+                                        <td>@absence.DateAbsence.ToShortDateString()</td>
+                                        <td>@absence.DureeHeures</td>
+                                        <td>@absence.TypeAbsence</td>
+                                        <td>
+                                            @if (absence.Justifiee == true)
+                                            {
+                                                <span class="badge bg-success">Oui</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Non</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="/Absences/Details/@absence.IdAbsence" class="btn btn-sm btn-info">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="/Absences/Edit/@absence.IdAbsence" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="/Absences/Delete/@absence.IdAbsence" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">
+                                        <i class="fas fa-calendar-times fa-2x text-muted mb-3"></i>
+                                        <p class="text-muted">Aucune absence trouvée</p>
+                                        <a href="/Absences/Create" class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i>
+                                            Ajouter une absence
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

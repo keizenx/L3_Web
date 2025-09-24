@@ -1,0 +1,54 @@
+@model IITWebApp.Models.Paiement
+
+@{
+    ViewData["Title"] = "Détails du paiement";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            <i class="fas fa-credit-card me-2"></i>
+            Détails du paiement
+        </h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Étudiant :</dt>
+            <dd class="col-sm-9">@Model.Etudiant?.Nom @Model.Etudiant?.Prenom</dd>
+
+            <dt class="col-sm-3">Type de paiement :</dt>
+            <dd class="col-sm-9">@Model.TypePaiement</dd>
+
+            <dt class="col-sm-3">Montant :</dt>
+            <dd class="col-sm-9">@Model.Montant.ToString("N0") FCFA</dd>
+
+            <dt class="col-sm-3">Date de paiement :</dt>
+            <dd class="col-sm-9">@Model.DatePaiement.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Méthode de paiement :</dt>
+            <dd class="col-sm-9">@Model.MethodePaiement</dd>
+
+            <dt class="col-sm-3">Référence :</dt>
+            <dd class="col-sm-9">@Model.ReferencePaiement</dd>
+
+            <dt class="col-sm-3">Statut :</dt>
+            <dd class="col-sm-9">
+                <span class="badge bg-@(Model.Statut == "valide" ? "success" : Model.Statut == "en attente" ? "warning" : "secondary")">
+                    @Model.Statut
+                </span>
+            </dd>
+        </dl>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+            </a>
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.IdPaiement" class="btn btn-primary">
+                    <i class="fas fa-edit me-1"></i> Modifier
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

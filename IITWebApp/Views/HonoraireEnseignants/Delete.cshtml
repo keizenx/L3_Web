@@ -1,0 +1,74 @@
+@model IITWebApp.Models.HonoraireEnseignant
+
+@{
+    ViewData["Title"] = "Supprimer Honoraire";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-12">
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-danger text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-trash-alt me-2"></i>
+                    Confirmer la Suppression
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Attention!</strong> Cette action est irréversible. Êtes-vous sûr de vouloir supprimer cet honoraire ?
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Enseignant:</strong>
+                        <p class="text-muted">@Model.Enseignant?.Nom @Model.Enseignant?.Prenom</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Cours:</strong>
+                        <p class="text-muted">@Model.Cours?.NomCours</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Période:</strong>
+                        <p class="text-muted">@Model.Mois @Model.Annee</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Montant Total:</strong>
+                        <p class="text-danger fw-bold">@(Model.MontantTotal?.ToString("N0") ?? "0") FCFA</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Statut de Paiement:</strong>
+                        <span class="badge bg-@(Model.StatutPaiement == "paye" ? "success" : Model.StatutPaiement == "en_cours" ? "warning" : "secondary")">
+                            @(Model.StatutPaiement == "paye" ? "Payé" : Model.StatutPaiement == "en_cours" ? "En cours" : "Non payé")
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>ID Honoraire:</strong>
+                        <p class="text-muted">@Model.IdHonoraire</p>
+                    </div>
+                </div>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="IdHonoraire" />
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="/HonoraireEnseignants" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Annuler
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i>
+                            Confirmer la Suppression
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

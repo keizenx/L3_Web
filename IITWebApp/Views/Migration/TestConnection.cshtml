@@ -1,0 +1,166 @@
+@{
+    ViewData["Title"] = "Test de Connexion et Migration";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-database me-2"></i>
+                        Test de Connexion MySQL et Migration des Données
+                    </h4>
+                </div>
+                <div class="card-body">
+                    
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-@ViewBag.MessageType alert-dismissible fade show" role="alert">
+                            @ViewBag.Message
+                            @if (ViewBag.Details != null)
+                            {
+                                <hr>
+                                <small><strong>Détails :</strong> @ViewBag.Details</small>
+                            }
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <!-- Actions de test -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h5><i class="fas fa-tools me-2"></i>Actions de Test et Migration</h5>
+                            <div class="btn-group flex-wrap" role="group">
+                                <a href="/Migration/TestConnection" class="btn btn-primary">
+                                    <i class="fas fa-plug"></i> Tester Connexion
+                                </a>
+                                <a href="/Migration/ViewAllTables" class="btn btn-info">
+                                    <i class="fas fa-table"></i> Voir Toutes les Tables
+                                </a>
+                                <a href="/Migration/FixNiveaux" class="btn btn-warning">
+                                    <i class="fas fa-wrench"></i> Corriger les Niveaux
+                                </a>
+                                <a href="/Migration/TestCreateEtudiant" class="btn btn-success">
+                                    <i class="fas fa-user-plus"></i> Test Créer Étudiant
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques des tables -->
+                    @if (ViewBag.Stats != null)
+                    {
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <h5><i class="fas fa-chart-bar me-2"></i>Statistiques des Tables</h5>
+                                <div class="row">
+                                    @foreach (var stat in ViewBag.Stats)
+                                    {
+                                        <div class="col-md-3 mb-3">
+                                            <div class="card bg-light">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title text-primary">@stat.Value</h5>
+                                                    <p class="card-text">@stat.Key</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Liste des étudiants existants -->
+                    @if (ViewBag.Etudiants != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5><i class="fas fa-users me-2"></i>Étudiants Existants (Aperçu)</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Matricule</th>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Niveau</th>
+                                                <th>Statut</th>
+                                                <th>Date Création</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var etudiant in ViewBag.Etudiants)
+                                            {
+                                                <tr>
+                                                    <td>@etudiant.IdEtudiant</td>
+                                                    <td><code>@etudiant.Matricule</code></td>
+                                                    <td>@etudiant.Nom</td>
+                                                    <td>@etudiant.Prenom</td>
+                                                    <td>
+                                                        @if (string.IsNullOrEmpty(etudiant.Niveau))
+                                                        {
+                                                            <span class="badge bg-warning">Non défini</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-success">@etudiant.Niveau</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge bg-@(etudiant.Statut == "actif" ? "success" : "secondary")">
+                                                            @etudiant.Statut
+                                                        </span>
+                                                    </td>
+                                                    <td>@etudiant.DateCreation.ToString("dd/MM/yyyy HH:mm")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Instructions -->
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-info-circle me-2"></i>Instructions</h6>
+                                <ol>
+                                    <li><strong>Tester Connexion</strong> : Vérifier que l'app peut se connecter à MySQL</li>
+                                    <li><strong>Voir Tables</strong> : Afficher le nombre d'enregistrements dans chaque table</li>
+                                    <li><strong>Corriger Niveaux</strong> : Extraire les niveaux des matricules existants</li>
+                                    <li><strong>Test Créer</strong> : Tester la création d'un nouvel étudiant</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions rapides vers les vrais contrôleurs -->
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <h5><i class="fas fa-external-link-alt me-2"></i>Tester les Vrais Contrôleurs</h5>
+                            <div class="btn-group flex-wrap" role="group">
+                                <a href="/Etudiants" class="btn btn-outline-primary">
+                                    <i class="fas fa-users"></i> Liste Étudiants
+                                </a>
+                                <a href="/Etudiants/Create" class="btn btn-outline-success">
+                                    <i class="fas fa-user-plus"></i> Créer Étudiant
+                                </a>
+                                <a href="/Inscriptions" class="btn btn-outline-info">
+                                    <i class="fas fa-clipboard-list"></i> Inscriptions
+                                </a>
+                                <a href="/Paiements" class="btn btn-outline-warning">
+                                    <i class="fas fa-money-bill-wave"></i> Paiements
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

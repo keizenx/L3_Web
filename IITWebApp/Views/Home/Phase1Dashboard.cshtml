@@ -1,0 +1,289 @@
+@{
+    ViewData["Title"] = "Phase 1 - Tableau de Bord";
+}
+
+<div class="container-fluid">
+    <!-- En-tête avec navigation -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">
+                <i class="fas fa-graduation-cap text-primary me-2"></i>
+                Phase 1 - Gestion des Inscriptions & Règlements
+            </h1>
+            <p class="text-muted">Tableau de bord principal pour la gestion des étudiants et des paiements</p>
+        </div>
+        <div>
+            <span class="badge bg-success fs-6">Phase 1 - Opérationnelle</span>
+        </div>
+    </div>
+
+    <!-- Cartes de statistiques -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Étudiants
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalEtudiants</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Inscriptions 2024-2025
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalInscriptions</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Paiements Reçus
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalPaiements</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Arriérés
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalArrieres</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions rapides -->
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-bolt me-2"></i>Actions Rapides
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="/Etudiants/Create" class="btn btn-primary btn-block w-100">
+                                <i class="fas fa-user-plus fa-2x mb-2"></i><br>
+                                <strong>Nouvel Étudiant</strong><br>
+                                <small>Inscription première fois</small>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/Inscriptions/Create" class="btn btn-success btn-block w-100">
+                                <i class="fas fa-clipboard-check fa-2x mb-2"></i><br>
+                                <strong>Réinscription</strong><br>
+                                <small>Année suivante</small>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/Paiements/Create" class="btn btn-info btn-block w-100">
+                                <i class="fas fa-credit-card fa-2x mb-2"></i><br>
+                                <strong>Nouveau Paiement</strong><br>
+                                <small>Enregistrer un règlement</small>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/Inscriptions/Promotion" class="btn btn-warning btn-block w-100">
+                                <i class="fas fa-arrow-up fa-2x mb-2"></i><br>
+                                <strong>Promotion</strong><br>
+                                <small>L1 → L2 → L3</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableaux de données -->
+    <div class="row">
+        <!-- Étudiants récents -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-users me-2"></i>Étudiants Récents
+                    </h6>
+                    <a href="/Etudiants" class="btn btn-sm btn-primary">Voir tout</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Matricule</th>
+                                    <th>Nom</th>
+                                    <th>Classe</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(ViewBag.EtudiantsRecents != null)
+                                {
+                                    @foreach(var etudiant in ViewBag.EtudiantsRecents)
+                                    {
+                                        <tr>
+                                            <td>@etudiant.Matricule</td>
+                                            <td>@etudiant.NomComplet</td>
+                                            <td>@etudiant.ClasseActuelle</td>
+                                            <td><span class="badge bg-success">Actif</span></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">Aucun étudiant récent</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paiements récents -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-dollar-sign me-2"></i>Paiements Récents
+                    </h6>
+                    <a href="/Paiements" class="btn btn-sm btn-primary">Voir tout</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Étudiant</th>
+                                    <th>Montant</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(ViewBag.PaiementsRecents != null)
+                                {
+                                    @foreach(var paiement in ViewBag.PaiementsRecents)
+                                    {
+                                        <tr>
+                                            <td>@paiement.EtudiantNom</td>
+                                            <td>@paiement.Montant.ToString("N0") FCFA</td>
+                                            <td>@paiement.DatePaiement.ToString("yyyy-MM-dd")</td>
+                                            <td><span class="badge bg-success">@paiement.Statut</span></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">Aucun paiement récent</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alertes et notifications -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-bell me-2"></i>Alertes & Notifications
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>@ViewBag.TotalArrieres étudiants</strong> ont des arriérés de paiement.
+                        <a href="/Paiements/Arrieres" class="alert-link">Voir la liste</a>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>5 étudiants L2GL</strong> ont été promus en L3GL pour l'année 2025-2026.
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>56 étudiants L1GL</strong> ont été promus en L2GL pour l'année 2024-2025.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .border-left-primary {
+            border-left: 0.25rem solid #4e73df !important;
+        }
+        .border-left-success {
+            border-left: 0.25rem solid #1cc88a !important;
+        }
+        .border-left-info {
+            border-left: 0.25rem solid #36b9cc !important;
+        }
+        .border-left-warning {
+            border-left: 0.25rem solid #f6c23e !important;
+        }
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+}

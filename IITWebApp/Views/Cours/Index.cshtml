@@ -1,0 +1,88 @@
+@model IEnumerable<IITWebApp.Models.Cours>
+
+@{
+    ViewData["Title"] = "Gestion des Cours";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-gradient">
+                <i class="fas fa-book me-3"></i>
+                Gestion des Cours
+            </h2>
+            <a href="/Cours/Create" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>
+                Nouveau Cours
+            </a>
+        </div>
+
+        <div class="card shadow-elegant">
+            <div class="card-header bg-gradient-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    Liste des Cours
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="fas fa-hashtag me-1"></i> Code</th>
+                                <th><i class="fas fa-book me-1"></i> Nom du Cours</th>
+                                <th><i class="fas fa-user-tie me-1"></i> Enseignant</th>
+                                <th><i class="fas fa-users me-1"></i> Classe</th>
+                                <th><i class="fas fa-clock me-1"></i> Heures</th>
+                                <th><i class="fas fa-star me-1"></i> Coefficient</th>
+                                <th><i class="fas fa-cog me-1"></i> Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any())
+                            {
+                                @foreach (var cours in Model)
+                                {
+                                    <tr>
+                                        <td class="fw-bold">@cours.CodeCours</td>
+                                        <td>@cours.NomCours</td>
+                                        <td>@cours.Enseignant?.Nom @cours.Enseignant?.Prenom</td>
+                                        <td>@cours.Classe?.NomClasse</td>
+                                        <td>@cours.NombreHeures</td>
+                                        <td>@cours.Coefficient</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="/Cours/Details/@cours.IdCours" class="btn btn-sm btn-info">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="/Cours/Edit/@cours.IdCours" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="/Cours/Delete/@cours.IdCours" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">
+                                        <i class="fas fa-book fa-2x text-muted mb-3"></i>
+                                        <p class="text-muted">Aucun cours trouvé</p>
+                                        <a href="/Cours/Create" class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i>
+                                            Ajouter le premier cours
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

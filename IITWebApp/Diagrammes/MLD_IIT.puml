@@ -1,0 +1,306 @@
+@startuml MLD_IIT_System
+!define LIGHTYELLOW #FFFACD
+!define LIGHTBLUE #E0F6FF
+!define LIGHTGREEN #F0FFF0
+!define LIGHTPINK #FFE4E1
+!define LIGHTGRAY #F5F5F5
+
+title Modèle Logique de Données (MLD) - Système IIT
+caption Base de données MySQL - Schéma Relationnel Complet
+
+package "PHASE 1 - INSCRIPTIONS & RÈGLEMENTS" <<LIGHTBLUE>> {
+
+    class ETUDIANT <<LIGHTYELLOW>> {
+        +**id_etudiant** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        matricule : VARCHAR(20) UNIQUE NOT NULL
+        nom : VARCHAR(50) NOT NULL
+        prenom : VARCHAR(50) NOT NULL
+        date_naissance : DATE NOT NULL
+        lieu_naissance : VARCHAR(100)
+        sexe : CHAR(1) NOT NULL CHECK ('M','F')
+        adresse : TEXT
+        telephone : VARCHAR(20)
+        email : VARCHAR(100) UNIQUE
+        nationalite : VARCHAR(50) DEFAULT 'Ivoirien'
+        statut : VARCHAR(20) DEFAULT 'actif'
+        date_creation : DATETIME DEFAULT NOW()
+        --
+        INDEX idx_etudiant_nom (nom, prenom)
+        INDEX idx_etudiant_matricule (matricule)
+    }
+
+    class FILIERE <<LIGHTGREEN>> {
+        +**id_filiere** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        nom_filiere : VARCHAR(100) NOT NULL
+        description : TEXT
+        duree_etudes : INT NOT NULL
+        statut : VARCHAR(20) DEFAULT 'active'
+        --
+        INDEX idx_filiere_nom (nom_filiere)
+    }
+
+    class CLASSE <<LIGHTBLUE>> {
+        +**id_classe** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        nom_classe : VARCHAR(50) NOT NULL
+        niveau : VARCHAR(20) NOT NULL
+        section : VARCHAR(10)
+        annee_academique : VARCHAR(9) NOT NULL
+        effectif_max : INT DEFAULT 50
+        statut : VARCHAR(20) DEFAULT 'ouverte'
+        --
+        INDEX idx_classe_niveau (niveau)
+        INDEX idx_classe_annee (annee_academique)
+    }
+
+    class SCOLARITE <<LIGHTPINK>> {
+        +**id_scolarite** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        id_filiere : INT NOT NULL FK → FILIERE
+        montant_annuel : DECIMAL(10,2) NOT NULL
+        annee_academique : VARCHAR(9) NOT NULL
+        statut : VARCHAR(20) DEFAULT 'active'
+        --
+        INDEX idx_scolarite_annee (annee_academique)
+        CONSTRAINT fk_scolarite_filiere CASCADE
+    }
+
+    class INSCRIPTION <<LIGHTYELLOW>> {
+        +**id_inscription** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        id_etudiant : INT NOT NULL FK → ETUDIANT
+        id_classe : INT NOT NULL FK → CLASSE
+        id_filiere : INT NOT NULL FK → FILIERE
+        annee_academique : VARCHAR(9) NOT NULL
+        date_inscription : DATE NOT NULL
+        type_inscription : VARCHAR(20) NOT NULL CHECK ('nouvelle','reinscription')
+        montant_inscription : DECIMAL(10,2) NOT NULL
+        statut : VARCHAR(20) DEFAULT 'en_attente'
+        --
+        INDEX idx_inscription_etudiant (id_etudiant)
+        INDEX idx_inscription_annee (annee_academique)
+        INDEX idx_inscription_statut (statut)
+        UNIQUE uk_inscription_annee (id_etudiant, annee_academique)
+        CONSTRAINT fk_inscription_etudiant CASCADE
+        CONSTRAINT fk_inscription_classe CASCADE
+        CONSTRAINT fk_inscription_filiere CASCADE
+    }
+
+    class SERVICE <<LIGHTBLUE>> {
+        +**id_service** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        nom_service : VARCHAR(100) NOT NULL
+        description : TEXT
+        montant_mensuel : DECIMAL(10,2) NOT NULL
+        statut : VARCHAR(20) DEFAULT 'disponible'
+        --
+        INDEX idx_service_nom (nom_service)
+    }
+
+    class SOUSCRIPTION_SERVICE <<LIGHTGREEN>> {
+        +**id_souscription** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        id_etudiant : INT NOT NULL FK → ETUDIANT
+        id_service : INT NOT NULL FK → SERVICE
+        date_debut : DATE NOT NULL
+        date_fin : DATE
+        date_modification : DATETIME
+        motif_fin : VARCHAR(200)
+        statut : VARCHAR(20) DEFAULT 'active'
+        --
+        INDEX idx_souscription_etudiant (id_etudiant)
+        INDEX idx_souscription_service (id_service)
+        CONSTRAINT fk_souscription_etudiant CASCADE
+        CONSTRAINT fk_souscription_service CASCADE
+    }
+
+    class PAIEMENT <<LIGHTPINK>> {
+        +**id_paiement** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        id_etudiant : INT NOT NULL FK → ETUDIANT
+        type_paiement : VARCHAR(20) NOT NULL CHECK ('scolarite','service','autre')
+        montant : DECIMAL(10,2) NOT NULL
+        date_paiement : DATETIME DEFAULT NOW()
+        mode_paiement : VARCHAR(20) NOT NULL CHECK ('especes','cheque','virement','mobile')
+        reference : VARCHAR(100)
+        statut : VARCHAR(20) DEFAULT 'valide'
+        --
+        INDEX idx_paiement_etudiant (id_etudiant)
+        INDEX idx_paiement_date (date_paiement)
+        INDEX idx_paiement_type (type_paiement)
+        CONSTRAINT fk_paiement_etudiant CASCADE
+    }
+
+    class DELEGUE <<LIGHTYELLOW>> {
+        +**id_delegue** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        id_etudiant : INT NOT NULL FK → ETUDIANT
+        id_classe : INT NOT NULL FK → CLASSE
+        fonction : VARCHAR(20) NOT NULL CHECK ('delegue','adjoint')
+        annee_academique : VARCHAR(9) NOT NULL
+        date_election : DATE
+        date_debut : DATE NOT NULL
+        date_fin : DATE
+        statut : VARCHAR(20) DEFAULT 'actif'
+        --
+        INDEX idx_delegue_classe (id_classe)
+        INDEX idx_delegue_annee (annee_academique)
+        UNIQUE uk_delegue_fonction (id_classe, fonction, annee_academique)
+        CONSTRAINT fk_delegue_etudiant CASCADE
+        CONSTRAINT fk_delegue_classe CASCADE
+    }
+}
+
+package "PHASE 2 - ENSEIGNEMENTS & SUIVI" <<LIGHTGREEN>> {
+
+    class ENSEIGNANT <<LIGHTBLUE>> {
+        +**id_enseignant** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        matricule : VARCHAR(20) UNIQUE NOT NULL
+        nom : VARCHAR(50) NOT NULL
+        prenom : VARCHAR(50) NOT NULL
+        email : VARCHAR(100) UNIQUE
+        telephone : VARCHAR(20)
+        specialite : VARCHAR(100)
+        grade : VARCHAR(50)
+        niveau_experience : INT
+        statut : VARCHAR(20) DEFAULT 'actif'
+        date_creation : DATETIME DEFAULT NOW()
+        --
+        INDEX idx_enseignant_nom (nom, prenom)
+        INDEX idx_enseignant_matricule (matricule)
+    }
+
+    class COURS <<LIGHTGREEN>> {
+        +**id_cours** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        nom_cours : VARCHAR(50) NOT NULL
+        code_cours : VARCHAR(10) UNIQUE NOT NULL
+        description : VARCHAR(500)
+        id_enseignant : INT NOT NULL FK → ENSEIGNANT
+        id_classe : INT NOT NULL FK → CLASSE
+        id_filiere : INT NOT NULL FK → FILIERE
+        nombre_heures : INT
+        coefficient : DECIMAL(5,2)
+        semestre : VARCHAR(10)
+        annee_academique : VARCHAR(9)
+        statut : VARCHAR(20) DEFAULT 'actif'
+        date_creation : DATETIME DEFAULT NOW()
+        --
+        INDEX idx_cours_code (code_cours)
+        INDEX idx_cours_enseignant (id_enseignant)
+        INDEX idx_cours_classe (id_classe)
+        INDEX idx_cours_annee (annee_academique)
+        CONSTRAINT fk_cours_enseignant CASCADE
+        CONSTRAINT fk_cours_classe CASCADE
+        CONSTRAINT fk_cours_filiere CASCADE
+    }
+
+    class ABSENCE <<LIGHTPINK>> {
+        +**id_absence** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        id_etudiant : INT NOT NULL FK → ETUDIANT
+        id_cours : INT NOT NULL FK → COURS
+        date_absence : DATE NOT NULL
+        type_absence : VARCHAR(50) DEFAULT 'ordinaire'
+        motif : VARCHAR(500)
+        justifiee : BOOLEAN DEFAULT FALSE
+        duree_heures : DECIMAL(4,2) DEFAULT 1.0
+        date_saisie : DATETIME DEFAULT NOW()
+        --
+        INDEX idx_absence_etudiant (id_etudiant)
+        INDEX idx_absence_cours (id_cours)
+        INDEX idx_absence_date (date_absence)
+        CONSTRAINT fk_absence_etudiant CASCADE
+        CONSTRAINT fk_absence_cours CASCADE
+    }
+
+    class HONORAIRE_ENSEIGNANT <<LIGHTYELLOW>> {
+        +**id_honoraire** : INT PRIMARY KEY AUTO_INCREMENT
+        --
+        id_enseignant : INT NOT NULL FK → ENSEIGNANT
+        id_cours : INT NOT NULL FK → COURS
+        mois : VARCHAR(20) NOT NULL
+        annee : INT NOT NULL
+        montant_base : DECIMAL(10,2)
+        taux_horaire : DECIMAL(8,2)
+        nombre_heures : INT
+        primes : DECIMAL(10,2) DEFAULT 0.00
+        retenues : DECIMAL(10,2) DEFAULT 0.00
+        montant_total : DECIMAL(12,2) NOT NULL
+        statut_paiement : VARCHAR(20) DEFAULT 'non_paye'
+        date_creation : DATETIME DEFAULT NOW()
+        --
+        INDEX idx_honoraire_enseignant (id_enseignant)
+        INDEX idx_honoraire_mois_annee (mois, annee)
+        UNIQUE uk_honoraire_periode (id_enseignant, id_cours, mois, annee)
+        CONSTRAINT fk_honoraire_enseignant CASCADE
+        CONSTRAINT fk_honoraire_cours CASCADE
+    }
+}
+
+' ===== RELATIONS FK =====
+
+' Phase 1
+FILIERE ||--o{ SCOLARITE : "id_filiere"
+ETUDIANT ||--o{ INSCRIPTION : "id_etudiant"
+CLASSE ||--o{ INSCRIPTION : "id_classe"
+FILIERE ||--o{ INSCRIPTION : "id_filiere"
+ETUDIANT ||--o{ SOUSCRIPTION_SERVICE : "id_etudiant"
+SERVICE ||--o{ SOUSCRIPTION_SERVICE : "id_service"
+ETUDIANT ||--o{ PAIEMENT : "id_etudiant"
+ETUDIANT ||--o{ DELEGUE : "id_etudiant"
+CLASSE ||--o{ DELEGUE : "id_classe"
+
+' Phase 2
+ENSEIGNANT ||--o{ COURS : "id_enseignant"
+CLASSE ||--o{ COURS : "id_classe"
+FILIERE ||--o{ COURS : "id_filiere"
+ETUDIANT ||--o{ ABSENCE : "id_etudiant"
+COURS ||--o{ ABSENCE : "id_cours"
+ENSEIGNANT ||--o{ HONORAIRE_ENSEIGNANT : "id_enseignant"
+COURS ||--o{ HONORAIRE_ENSEIGNANT : "id_cours"
+
+' ===== LÉGENDE ET ANNOTATIONS =====
+legend right
+    |<color:LIGHTYELLOW>| **Tables Principales** |
+    |<color:LIGHTBLUE>| **Tables Structure** |
+    |<color:LIGHTGREEN>| **Tables Relations** |
+    |<color:LIGHTPINK>| **Tables Opérationnelles** |
+    ----
+    **Contraintes d'intégrité** :
+    • CASCADE : Suppression en cascade
+    • UNIQUE : Contrainte d'unicité
+    • CHECK : Contraintes de domaine
+    • INDEX : Index pour performances
+    ----
+    **Historique** :
+    • DELEGUE : date_debut, date_fin
+    • SOUSCRIPTION : date_modification, motif_fin
+endlegend
+
+note top of ETUDIANT
+    **Règles de Gestion** :
+    • Matricule unique obligatoire
+    • Email unique si renseigné
+    • Sexe : M ou F uniquement
+    • Statut par défaut : 'actif'
+end note
+
+note top of INSCRIPTION
+    **Règles de Gestion** :
+    • Une seule inscription par étudiant/année
+    • Type : 'nouvelle' ou 'reinscription'
+    • Statut par défaut : 'en_attente'
+end note
+
+note top of COURS
+    **Règles de Gestion** :
+    • Code cours unique obligatoire
+    • Un enseignant par cours
+    • Assignation classe + filière
+end note
+
+@enduml

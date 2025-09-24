@@ -1,0 +1,119 @@
+@model IITWebApp.Models.Inscription
+
+@{
+    ViewData["Title"] = "Nouvelle Inscription";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Nouvelle Inscription</h1>
+        <a href="/Inscriptions" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left fa-sm"></i> Retour à la liste
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Informations de l'Inscription</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="IdEtudiant" class="form-label">Étudiant *</label>
+                            <select asp-for="IdEtudiant" class="form-select" asp-items="ViewBag.IdEtudiant">
+                                <option value="">Sélectionner un étudiant...</option>
+                            </select>
+                            <span asp-validation-for="IdEtudiant" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="IdClasse" class="form-label">Classe *</label>
+                            <select asp-for="IdClasse" class="form-select" asp-items="ViewBag.IdClasse">
+                                <option value="">Sélectionner une classe...</option>
+                            </select>
+                            <span asp-validation-for="IdClasse" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="IdFiliere" class="form-label">Filière *</label>
+                            <select asp-for="IdFiliere" class="form-select" asp-items="ViewBag.IdFiliere">
+                                <option value="">Sélectionner une filière...</option>
+                            </select>
+                            <span asp-validation-for="IdFiliere" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="AnneeAcademique" class="form-label">Année Académique *</label>
+                            <input asp-for="AnneeAcademique" class="form-control" placeholder="2024-2025" />
+                            <span asp-validation-for="AnneeAcademique" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="TypeInscription" class="form-label">Type d'Inscription *</label>
+                            <select asp-for="TypeInscription" class="form-select">
+                                <option value="">Sélectionner...</option>
+                                <option value="Nouvelle">Nouvelle</option>
+                                <option value="Réinscription">Réinscription</option>
+                                <option value="Transfert">Transfert</option>
+                            </select>
+                            <span asp-validation-for="TypeInscription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="DateInscription" class="form-label">Date d'Inscription *</label>
+                            <input asp-for="DateInscription" type="date" class="form-control" />
+                            <span asp-validation-for="DateInscription" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="MontantInscription" class="form-label">Montant d'Inscription *</label>
+                            <input asp-for="MontantInscription" type="number" step="0.01" class="form-control" />
+                            <span asp-validation-for="MontantInscription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Statut" class="form-label">Statut</label>
+                            <select asp-for="Statut" class="form-select">
+                                <option value="en attente">En attente</option>
+                                <option value="valide">Validé</option>
+                                <option value="rejete">Rejeté</option>
+                            </select>
+                            <span asp-validation-for="Statut" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="/Inscriptions" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

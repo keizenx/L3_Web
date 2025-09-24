@@ -1,0 +1,116 @@
+@model IITWebApp.Models.Inscription
+
+@{
+    ViewData["Title"] = "Modifier l'inscription";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            <i class="fas fa-edit me-2"></i>
+            Modifier l'inscription
+        </h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <input type="hidden" asp-for="IdInscription" />
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="IdEtudiant" class="form-label">Étudiant</label>
+                        <select asp-for="IdEtudiant" class="form-control" asp-items="ViewBag.IdEtudiant">
+                            <option value="">Sélectionner un étudiant...</option>
+                        </select>
+                        <span asp-validation-for="IdEtudiant" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="IdClasse" class="form-label">Classe</label>
+                        <select asp-for="IdClasse" class="form-control" asp-items="ViewBag.IdClasse">
+                            <option value="">Sélectionner une classe...</option>
+                        </select>
+                        <span asp-validation-for="IdClasse" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="IdFiliere" class="form-label">Filière</label>
+                        <select asp-for="IdFiliere" class="form-control" asp-items="ViewBag.IdFiliere">
+                            <option value="">Sélectionner une filière...</option>
+                        </select>
+                        <span asp-validation-for="IdFiliere" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="AnneeAcademique" class="form-label">Année académique</label>
+                        <input asp-for="AnneeAcademique" class="form-control" value="@Model?.AnneeAcademique" />
+                        <span asp-validation-for="AnneeAcademique" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="DateInscription" class="form-label">Date d'inscription</label>
+                        <input asp-for="DateInscription" class="form-control" type="date" value="@Model?.DateInscription.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="DateInscription" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="TypeInscription" class="form-label">Type d'inscription</label>
+                        <select asp-for="TypeInscription" class="form-control">
+                            <option value="">Sélectionner...</option>
+                            <option value="nouvelle" selected="@(Model?.TypeInscription == "nouvelle")">Nouvelle inscription</option>
+                            <option value="réinscription" selected="@(Model?.TypeInscription == "réinscription")">Réinscription</option>
+                        </select>
+                        <span asp-validation-for="TypeInscription" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="MontantInscription" class="form-label">Montant d'inscription</label>
+                        <input asp-for="MontantInscription" class="form-control" type="number" step="0.01" value="@Model?.MontantInscription" />
+                        <span asp-validation-for="MontantInscription" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Statut" class="form-label">Statut</label>
+                        <select asp-for="Statut" class="form-control">
+                            <option value="en attente" selected="@(Model?.Statut == "en attente")">En attente</option>
+                            <option value="validée" selected="@(Model?.Statut == "validée")">Validé</option>
+                            <option value="refusée" selected="@(Model?.Statut == "refusée")">Refusé</option>
+                        </select>
+                        <span asp-validation-for="Statut" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

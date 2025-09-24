@@ -1,0 +1,88 @@
+@model IEnumerable<IITWebApp.Models.Paiement>
+
+@{
+    ViewData["Title"] = "Liste des Paiements";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Gestion des Paiements</h1>
+        <a href="/Paiements/Create" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus fa-sm"></i> Nouveau Paiement
+        </a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des Paiements</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Étudiant</th>
+                            <th>Type</th>
+                            <th>Montant</th>
+                            <th>Date Paiement</th>
+                            <th>Méthode Paiement</th>
+                            <th>Référence</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Etudiant?.Nom @item.Etudiant?.Prenom</td>
+                                <td>@item.TypePaiement</td>
+                                <td>@item.Montant.ToString("C")</td>
+                                <td>@item.DatePaiement.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@item.MethodePaiement</td>
+                                <td>@item.ReferencePaiement</td>
+                                <td>
+                                    <span class="badge @(item.Statut == "valide" ? "bg-success" : "bg-warning")">
+                                        @item.Statut
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Paiements/Edit/@item.IdPaiement" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/Paiements/Details/@item.IdPaiement" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="/Paiements/Delete/@item.IdPaiement" class="btn btn-sm btn-outline-danger" 
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce paiement ?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                }
+            });
+        });
+    </script>
+}
